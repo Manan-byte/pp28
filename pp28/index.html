@@ -3,309 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Input Data KBLI (Final)</title>
+    <title>Form Validasi Data KBLI - Desain Animasi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-        .file-input-label { transition: all 0.2s ease-in-out; }
-        .file-input-label:hover { background-color: #e0e7ff; border-color: #4f46e5; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff; /* sky-50 */
+            background-image: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+        }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .loader {
+            border-top-color: #ffffff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* Styling & Animasi Kartu */
+        .form-card, #form-header {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            border: 1px solid #e2e8f0; /* slate-200 */
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        #form-header {
+             padding: 1rem;
+        }
+        .form-card.visible, #form-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .form-card:focus-within {
+            box-shadow: 0 10px 15px -3px rgb(14 165 233 / 0.1), 0 4px 6px -4px rgb(14 165 233 / 0.1);
+            border-color: #38bdf8; /* sky-400 */
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: #0ea5e9; /* sky-500 */
+            ring-width: 0;
+        }
+        /* Animasi Tombol Submit */
+        .submit-button {
+            transition: all 0.3s ease;
+        }
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgb(14 165 233 / 0.3);
+        }
+        .submit-button:active {
+            transform: translateY(0px);
+            box-shadow: 0 4px 10px -3px rgb(14 165 233 / 0.2);
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 via-stone-50 to-gray-100 flex items-center justify-center min-h-screen p-4">
+<body class="flex items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
 
-    <div class="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-8 space-y-8">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700">Validasi Data KBLI</h1>
-            <p class="mt-2 text-gray-600">Platform modern untuk validasi data yang efisien dan terstruktur.</p>
-        </div>
+    <div class="w-full max-w-3xl space-y-8">
+        
+        <header class="text-center" id="form-header">
+            <div class="inline-block p-4 bg-sky-100 rounded-2xl mb-4">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold text-slate-800">Formulir Validasi Data KBLI</h1>
+            <p class="text-slate-500 mt-2">Lengkapi data berikut untuk melanjutkan proses validasi.</p>
+        </header>
 
-        <form id="kbli-form" class="space-y-6">
-            <!-- Accordion 1: Informasi Utama -->
-            <div class="border border-gray-200 rounded-lg">
-                <button type="button" class="accordion-toggle w-full flex justify-between items-center p-5 text-left font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none" aria-expanded="true">
-                    <span>1. Informasi Utama</span>
-                    <svg class="w-6 h-6 shrink-0 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="accordion-content p-5 border-t border-gray-200" style="max-height: 1000px;">
+        <form id="data-form" novalidate class="space-y-8">
+            <!-- KARTU 1: INFORMASI UTAMA -->
+            <div class="form-card">
+                <h2 class="text-xl font-semibold text-slate-700 border-b border-slate-200 pb-4 mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Informasi Utama
+                </h2>
+                <div class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="kode_kbli" class="block text-sm font-medium text-gray-700 mb-1">Kode KBLI</label>
-                            <input type="text" name="kode_kbli" id="kode_kbli" pattern="[0-9]*" inputmode="numeric" class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., 01111" required>
+                            <label for="kode_kbli" class="block text-sm font-medium text-slate-600 mb-1">Kode KBLI</label>
+                            <input type="text" id="kode_kbli" name="kode_kbli" placeholder="e.g., 01111" class="w-full px-4 py-2 border border-slate-300 rounded-lg transition" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                         </div>
                         <div>
-                            <label for="kode_rla" class="block text-sm font-medium text-gray-700 mb-1">Kode RLA</label>
-                            <input type="text" name="kode_rla" id="kode_rla" pattern="[0-9]*" inputmode="numeric" class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., 123" required>
+                            <label for="kode_rla" class="block text-sm font-medium text-slate-600 mb-1">Kode RLA</label>
+                            <input type="text" id="kode_rla" name="kode_rla" placeholder="e.g., 123" class="w-full px-4 py-2 border border-slate-300 rounded-lg transition" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                         </div>
                     </div>
-                    <div class="mt-6">
-                        <label for="uraian_ruang_lingkup" class="block text-sm font-medium text-gray-700 mb-1">Uraian Ruang Lingkup</label>
-                        <textarea name="uraian_ruang_lingkup" id="uraian_ruang_lingkup" rows="3" class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Jelaskan ruang lingkup secara detail di sini..." required></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Accordion 2: Tingkat Risiko -->
-            <div class="border border-gray-200 rounded-lg">
-                <button type="button" class="accordion-toggle w-full flex justify-between items-center p-5 text-left font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none" aria-expanded="false">
-                    <span>2. Tingkat Risiko</span>
-                    <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="accordion-content p-5 border-t border-gray-200">
-                    <div class="flex items-center space-x-4 mb-4">
-                        <span class="font-medium text-gray-700">Status:</span>
-                        <input type="radio" id="risiko_sesuai" name="status_risiko" value="Sesuai" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" required>
-                        <label for="risiko_sesuai">Sesuai</label>
-                        <input type="radio" id="risiko_tidak_sesuai" name="status_risiko" value="Tidak Sesuai" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-                        <label for="risiko_tidak_sesuai">Tidak Sesuai</label>
-                    </div>
-                    <p class="text-sm font-medium text-gray-700 mb-2">Pilihan Risiko (Pilih yang sesuai):</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                        <div class="space-y-2">
-                            <div class="flex items-center">
-                                <input id="risiko_mikro" name="pilihan_risiko" type="checkbox" value="Mikro" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <label for="risiko_mikro" class="ml-2 block text-sm text-gray-900">Mikro, = R</label>
-                            </div>
-                            <input type="file" name="file_risiko_mikro" id="file_risiko_mikro" class="hidden">
-                            <label for="file_risiko_mikro" class="file-input-label cursor-pointer text-sm text-gray-700 border-2 border-dashed border-gray-300 rounded-lg p-2 flex items-center justify-center w-full">
-                                <span class="file-name">Unggah Bukti Risiko Mikro</span>
-                            </label>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center">
-                                <input id="risiko_kecil" name="pilihan_risiko" type="checkbox" value="Kecil" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <label for="risiko_kecil" class="ml-2 block text-sm text-gray-900">Kecil, = R</label>
-                            </div>
-                            <input type="file" name="file_risiko_kecil" id="file_risiko_kecil" class="hidden">
-                            <label for="file_risiko_kecil" class="file-input-label cursor-pointer text-sm text-gray-700 border-2 border-dashed border-gray-300 rounded-lg p-2 flex items-center justify-center w-full">
-                                <span class="file-name">Unggah Bukti Risiko Kecil</span>
-                            </label>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center">
-                                <input id="risiko_menengah" name="pilihan_risiko" type="checkbox" value="Menengah" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <label for="risiko_menengah" class="ml-2 block text-sm text-gray-900">Menengah, = MR</label>
-                            </div>
-                            <input type="file" name="file_risiko_menengah" id="file_risiko_menengah" class="hidden">
-                            <label for="file_risiko_menengah" class="file-input-label cursor-pointer text-sm text-gray-700 border-2 border-dashed border-gray-300 rounded-lg p-2 flex items-center justify-center w-full">
-                                <span class="file-name">Unggah Bukti Risiko Menengah</span>
-                            </label>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center">
-                                <input id="risiko_besar" name="pilihan_risiko" type="checkbox" value="Besar" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <label for="risiko_besar" class="ml-2 block text-sm text-gray-900">Besar, = MT</label>
-                            </div>
-                             <input type="file" name="file_risiko_besar" id="file_risiko_besar" class="hidden">
-                            <label for="file_risiko_besar" class="file-input-label cursor-pointer text-sm text-gray-700 border-2 border-dashed border-gray-300 rounded-lg p-2 flex items-center justify-center w-full">
-                                <span class="file-name">Unggah Bukti Risiko Besar</span>
-                            </label>
-                        </div>
+                    <div>
+                        <label for="uraian_ruang_lingkup" class="block text-sm font-medium text-slate-600 mb-1">Uraian Ruang Lingkup</label>
+                        <textarea id="uraian_ruang_lingkup" name="uraian_ruang_lingkup" rows="3" placeholder="Jelaskan ruang lingkup secara detail di sini..." class="w-full px-4 py-2 border border-slate-300 rounded-lg transition"></textarea>
                     </div>
                 </div>
             </div>
 
-            <!-- Accordion 3: Kewenangan, Persyaratan, & Kewajiban -->
-            <div class="border border-gray-200 rounded-lg">
-                <button type="button" class="accordion-toggle w-full flex justify-between items-center p-5 text-left font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none" aria-expanded="false">
-                    <span>3. Kewenangan, Persyaratan, & Kewajiban</span>
-                    <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="accordion-content p-5 border-t border-gray-200 space-y-4">
-                    <!-- Kewenangan -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <div class="flex items-center space-x-4 mb-2">
-                             <span class="font-medium text-gray-700">Kewenangan:</span>
-                            <input type="radio" id="kewenangan_sesuai" name="status_kewenangan" value="Sesuai" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" required>
-                            <label for="kewenangan_sesuai">Sesuai</label>
-                            <input type="radio" id="kewenangan_tidak_sesuai" name="status_kewenangan" value="Tidak Sesuai" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-                            <label for="kewenangan_tidak_sesuai">Tidak Sesuai</label>
+            <!-- KARTU 2: TINGKAT RESIKO -->
+            <div class="form-card">
+                <h2 class="text-xl font-semibold text-slate-700 border-b border-slate-200 pb-4 mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    Tingkat Resiko
+                </h2>
+                <div class="space-y-6">
+                    <div>
+                        <span class="block text-sm font-medium text-slate-600 mb-2">Status Keseluruhan</span>
+                        <div class="flex items-center space-x-6">
+                            <label class="flex items-center"><input type="radio" name="status_risiko" value="Sesuai" class="mr-2 h-4 w-4 text-sky-600 focus:ring-sky-500 border-slate-300"> Sesuai</label>
+                            <label class="flex items-center"><input type="radio" name="status_risiko" value="Tidak Sesuai" class="mr-2 h-4 w-4 text-sky-600 focus:ring-sky-500 border-slate-300"> Tidak Sesuai</label>
                         </div>
-                        <input type="text" name="nomor_kewenangan" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Masukkan nomor Kewenangan">
                     </div>
-                     <!-- Persyaratan -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <div class="flex items-center space-x-4 mb-2">
-                             <span class="font-medium text-gray-700">Persyaratan:</span>
-                            <input type="radio" id="persyaratan_sesuai" name="status_persyaratan" value="Sesuai" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" required>
-                            <label for="persyaratan_sesuai">Sesuai</label>
-                            <input type="radio" id="persyaratan_tidak_sesuai" name="status_persyaratan" value="Tidak Sesuai" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-                            <label for="persyaratan_tidak_sesuai">Tidak Sesuai</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50/50 rounded-lg border border-slate-200 space-y-3">
+                            <label class="flex items-center font-medium"><input type="checkbox" name="pilihan_risiko" value="Mikro" class="mr-2 h-4 w-4 rounded text-sky-600 focus:ring-sky-500 border-slate-300"> Mikro</label>
+                            <div class="flex items-center space-x-2">
+                                <label class="file-input-wrapper px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200 cursor-pointer transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                    <span>Unggah Bukti</span>
+                                    <input type="file" name="file_risiko_mikro" onchange="updateFileName(this)">
+                                </label>
+                                <span class="text-sm text-slate-500 truncate" data-file-name="file_risiko_mikro">Tidak ada file.</span>
+                            </div>
+                            <textarea name="catatan_risiko_mikro" rows="2" placeholder="Catatan khusus untuk Resiko Mikro..." class="w-full px-4 py-2 border border-slate-300 rounded-lg transition text-sm"></textarea>
                         </div>
-                        <input type="text" name="nomor_persyaratan" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Masukkan nomor Persyaratan">
-                    </div>
-                     <!-- Kewajiban -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <div class="flex items-center space-x-4 mb-2">
-                             <span class="font-medium text-gray-700">Kewajiban:</span>
-                            <input type="radio" id="kewajiban_sesuai" name="status_kewajiban" value="Sesuai" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" required>
-                            <label for="kewajiban_sesuai">Sesuai</label>
-                            <input type="radio" id="kewajiban_tidak_sesuai" name="status_kewajiban" value="Tidak Sesuai" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-                            <label for="kewajiban_tidak_sesuai">Tidak Sesuai</label>
+                        <div class="p-4 bg-slate-50/50 rounded-lg border border-slate-200 space-y-3">
+                            <label class="flex items-center font-medium"><input type="checkbox" name="pilihan_risiko" value="Kecil" class="mr-2 h-4 w-4 rounded text-sky-600 focus:ring-sky-500 border-slate-300"> Kecil</label>
+                            <div class="flex items-center space-x-2">
+                                <label class="file-input-wrapper px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200 cursor-pointer transition">
+                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                    <span>Unggah Bukti</span>
+                                    <input type="file" name="file_risiko_kecil" onchange="updateFileName(this)">
+                                </label>
+                                <span class="text-sm text-slate-500 truncate" data-file-name="file_risiko_kecil">Tidak ada file.</span>
+                            </div>
+                            <textarea name="catatan_risiko_kecil" rows="2" placeholder="Catatan khusus untuk Resiko Kecil..." class="w-full px-4 py-2 border border-slate-300 rounded-lg transition text-sm"></textarea>
                         </div>
-                        <input type="text" name="nomor_kewajiban" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Masukkan nomor Kewajiban">
+                        <div class="p-4 bg-slate-50/50 rounded-lg border border-slate-200 space-y-3">
+                            <label class="flex items-center font-medium"><input type="checkbox" name="pilihan_risiko" value="Menengah" class="mr-2 h-4 w-4 rounded text-sky-600 focus:ring-sky-500 border-slate-300"> Menengah</label>
+                             <div class="flex items-center space-x-2">
+                                <label class="file-input-wrapper px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200 cursor-pointer transition">
+                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                    <span>Unggah Bukti</span>
+                                    <input type="file" name="file_risiko_menengah" onchange="updateFileName(this)">
+                                </label>
+                                <span class="text-sm text-slate-500 truncate" data-file-name="file_risiko_menengah">Tidak ada file.</span>
+                            </div>
+                            <textarea name="catatan_risiko_menengah" rows="2" placeholder="Catatan khusus untuk Resiko Menengah..." class="w-full px-4 py-2 border border-slate-300 rounded-lg transition text-sm"></textarea>
+                        </div>
+                        <div class="p-4 bg-slate-50/50 rounded-lg border border-slate-200 space-y-3">
+                            <label class="flex items-center font-medium"><input type="checkbox" name="pilihan_risiko" value="Besar" class="mr-2 h-4 w-4 rounded text-sky-600 focus:ring-sky-500 border-slate-300"> Besar</label>
+                            <div class="flex items-center space-x-2">
+                                <label class="file-input-wrapper px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200 cursor-pointer transition">
+                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                    <span>Unggah Bukti</span>
+                                    <input type="file" name="file_risiko_besar" onchange="updateFileName(this)">
+                                </label>
+                                <span class="text-sm text-slate-500 truncate" data-file-name="file_risiko_besar">Tidak ada file.</span>
+                            </div>
+                            <textarea name="catatan_risiko_besar" rows="2" placeholder="Catatan khusus untuk Resiko Besar..." class="w-full px-4 py-2 border border-slate-300 rounded-lg transition text-sm"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tombol Submit -->
-            <div class="flex flex-col items-center pt-4">
-                 <button type="submit" id="submit-button" class="w-full max-w-xs bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
-                    Tambahkan Data
+            <!-- KARTU 3: KEWENANGAN, DLL -->
+            <div class="form-card">
+                <h2 class="text-xl font-semibold text-slate-700 border-b border-slate-200 pb-4 mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                    Kewenangan, Persyaratan, & Kewajiban
+                </h2>
+                <div class="space-y-8">
+                    <div class="p-4 bg-slate-50/50 rounded-lg border border-slate-200 space-y-3">
+                        <label class="block text-sm font-medium text-slate-600">Kewenangan</label>
+                        <div class="flex items-center space-x-6">
+                            <label class="flex items-center"><input type="radio" name="status_kewenangan" value="Sesuai" class="mr-2 h-4 w-4 text-sky-600 focus:ring-sky-500 border-slate-300"> Sesuai</label>
+                            <label class="flex items-center"><input type="radio" name="status_kewenangan" value="Tidak Sesuai" class="mr-2 h-4 w-4 text-sky-600 focus:ring-sky-500 border-slate-300"> Tidak Sesuai</label>
+                        </div>
+                        <input type="text" name="nomor_kewenangan" placeholder="Masukkan nomor Kewenangan" class="w-full px-4 py-2 border border-slate-300 rounded-lg transition">
+                        <textarea name="catatan_kewenangan" rows="2" placeholder="Catatan khusus untuk Kewenangan..." class="w-full px-4 py-2 border border-slate-300 rounded-lg transition text-sm"></textarea>
+                    </div>
+                    <div class="p-4 bg-slate-50/50 rounded-lg border border-slate-200 space-y-3">
+                        <label class="block text-sm font-medium text-slate-600">Persyaratan</label>
+                        <div class="flex items-center space-x-6">
+                            <label class="flex items-center"><input type="radio" name="status_persyaratan" value="Sesuai" class="mr-2 h-4 w-4 text-sky-600 focus:ring-sky-500 border-slate-300"> Sesuai</label>
+                            <label class="flex items-center"><input type="radio" name="status_persyaratan" value="Tidak Sesuai" class="mr-2 h-4 w-4 text-sky-600 focus:ring-sky-500 border-slate-300"> Tidak Sesuai</label>
+                        </div>
+                        <input type="text" name="nomor_persyaratan" placeholder="Masukkan nomor Persyaratan" class="w-full px-4 py-2 border border-slate-300 rounded-lg transition">
+                        <textarea name="catatan_persyaratan" rows="2" placeholder="Catatan khusus untuk Persyaratan..." class="w-full px-4 py-2 border border-slate-300 rounded-lg transition text-sm"></textarea>
+                    </div>
+                    <div class="p-4 bg-slate-50/50 rounded-lg border border-slate-200 space-y-3">
+                        <label class="block text-sm font-medium text-slate-600">Kewajiban</label>
+                        <div class="flex items-center space-x-6">
+                            <label class="flex items-center"><input type="radio" name="status_kewajiban" value="Sesuai" class="mr-2 h-4 w-4 text-sky-600 focus:ring-sky-500 border-slate-300"> Sesuai</label>
+                            <label class="flex items-center"><input type="radio" name="status_kewajiban" value="Tidak Sesuai" class="mr-2 h-4 w-4 text-sky-600 focus:ring-sky-500 border-slate-300"> Tidak Sesuai</label>
+                        </div>
+                        <input type="text" name="nomor_kewajiban" placeholder="Masukkan nomor Kewajiban" class="w-full px-4 py-2 border border-slate-300 rounded-lg transition">
+                        <textarea name="catatan_kewajiban" rows="2" placeholder="Catatan khusus untuk Kewajiban..." class="w-full px-4 py-2 border border-slate-300 rounded-lg transition text-sm"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOMBOL SUBMIT -->
+            <div class="flex flex-col items-center justify-center pt-4">
+                <button type="submit" id="submit-button" class="submit-button w-full md:w-auto px-12 py-3 bg-sky-600 text-white font-semibold rounded-lg shadow-lg flex items-center justify-center text-lg bg-gradient-to-r from-sky-500 to-cyan-500">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                    <span id="submit-text">Kirim Data</span>
+                    <div id="submit-loader" class="loader h-6 w-6 rounded-full border-2 border-t-2 ml-3 hidden"></div>
                 </button>
-                <div id="feedback-message" class="mt-4 text-center text-sm font-medium"></div>
+                <div id="message" class="text-center font-medium mt-4 h-6"></div>
             </div>
         </form>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('kbli-form');
-            const submitButton = document.getElementById('submit-button');
-            const feedback = document.getElementById('feedback-message');
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzlRvZYZPwG1lPqXWMRneurTLOCpfbuPPjLLpbTNLI9HA0ZN_yieAltmtdLX_Kpp2cL/exec';
-
-            // --- Logika Accordion ---
-            document.querySelectorAll('.accordion-toggle').forEach(button => {
-                button.addEventListener('click', () => {
-                    const content = button.nextElementSibling;
-                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
-                    // Tutup semua accordion
-                    document.querySelectorAll('.accordion-content').forEach(c => {
-                        c.style.maxHeight = '0px';
-                        c.previousElementSibling.setAttribute('aria-expanded', 'false');
-                        c.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
-                    });
-                    
-                    // Buka yang diklik jika sebelumnya tertutup
-                    if (!isExpanded) {
-                        button.setAttribute('aria-expanded', 'true');
-                        content.style.maxHeight = content.scrollHeight + 'px';
-                        button.querySelector('svg').classList.add('rotate-180');
-                    }
-                });
-            });
-
-            // --- Logika Input File ---
-            document.querySelectorAll('input[type="file"]').forEach(input => {
-                input.addEventListener('change', (e) => {
-                    const fileName = e.target.files[0] ? e.target.files[0].name : `Unggah Bukti...`;
-                    const label = document.querySelector(`label[for="${e.target.id}"] .file-name`);
-                    if (label) {
-                        label.textContent = fileName;
-                    }
-                });
-            });
-
-            // --- Logika Validasi Angka ---
-            document.querySelectorAll('input[pattern="[0-9]*"]').forEach(input => {
-                input.addEventListener('beforeinput', (e) => {
-                    if (e.data && !/^[0-9]+$/.test(e.data)) {
-                        e.preventDefault();
-                    }
-                });
-            });
-
-            // --- Logika Pengiriman Form (Submit) dengan DEBUGGING ---
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                // 1. Nonaktifkan tombol dan tampilkan status loading
-                submitButton.disabled = true;
-                submitButton.textContent = 'Mengirim...';
-                feedback.textContent = 'Mohon tunggu, data sedang diproses.';
-                feedback.className = 'text-blue-600';
-                console.log("--- PROSES PENGIRIMAN DIMULAI ---");
-
-                try {
-                    // 2. Kumpulkan semua data dari form
-                    const formData = new FormData(form);
-                    const data = Object.fromEntries(formData.entries());
-                    
-                    // Ambil data checkbox secara manual karena FormData hanya mengambil yang pertama
-                    const pilihanRisiko = [];
-                    document.querySelectorAll('input[name="pilihan_risiko"]:checked').forEach(checkbox => {
-                        pilihanRisiko.push(checkbox.value);
-                    });
-                    data.pilihan_risiko = pilihanRisiko;
-                    console.log("Data teks berhasil dikumpulkan:", data);
-
-                    // 3. Fungsi untuk mengubah file menjadi Base64
-                    const fileToBase64 = (file) => new Promise((resolve, reject) => {
-                        if (!file) {
-                            resolve(null);
-                            return;
-                        }
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = () => {
-                            // Ekstrak hanya data base64
-                            const base64Content = reader.result.split(',')[1];
-                            resolve({
-                                filename: file.name,
-                                mimeType: file.type,
-                                content: base64Content,
-                            });
-                        };
-                        reader.onerror = error => reject(error);
-                    });
-
-                    console.log("Memproses file untuk diunggah...");
-                    
-                    // 4. Siapkan payload akhir yang akan dikirim
-                    const payload = {
-                        ...data,
-                        file_risiko_mikro: await fileToBase64(formData.get('file_risiko_mikro')),
-                        file_risiko_kecil: await fileToBase64(formData.get('file_risiko_kecil')),
-                        file_risiko_menengah: await fileToBase64(formData.get('file_risiko_menengah')),
-                        file_risiko_besar: await fileToBase64(formData.get('file_risiko_besar')),
-                    };
-
-                    console.log("Payload akhir yang akan dikirim (tanpa konten file):", { ...payload, file_risiko_mikro: '...', file_risiko_kecil: '...', file_risiko_menengah: '...', file_risiko_besar: '...' });
-                    
-                    // 5. Kirim data ke Google Apps Script
-                    console.log("Mengirim data ke URL:", scriptURL);
-                    const response = await fetch(scriptURL, {
-                        method: 'POST',
-                        body: JSON.stringify(payload),
-                        headers: { 'Content-Type': 'application/json' },
-                    });
-
-                    console.log("Menerima respons dari server:", response);
-
-                    // 6. Tangani respons dari server
-                    const result = await response.json();
-                    console.log("Respons server (JSON):", result);
-                    
-                    if (result.status === "success") {
-                        feedback.textContent = 'Data berhasil ditambahkan!';
-                        feedback.className = 'text-green-600';
-                        form.reset();
-                        // Reset nama file di label
-                         document.querySelectorAll('.file-name').forEach(span => {
-                            span.textContent = span.parentElement.textContent.trim().replace('Unggah', 'Unggah Bukti');
-                        });
-                    } else {
-                        // Jika server mengembalikan status 'error'
-                        throw new Error(result.message || 'Terjadi kesalahan di server.');
-                    }
-
-                } catch (error) {
-                    // 7. Tangani jika ada error di sepanjang proses
-                    console.error("--- TERJADI ERROR ---:", error);
-                    feedback.textContent = `Gagal! Terjadi kesalahan: ${error.message}. Silakan cek console untuk detail.`;
-                    feedback.className = 'text-red-600';
-                } finally {
-                    // 8. Aktifkan kembali tombol setelah selesai
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Tambahkan Data';
-                    console.log("--- PROSES PENGIRIMAN SELESAI ---");
-                }
-            });
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwTKnq5P_744dXPtW9Dan7ZlX9yLEeoJV9Rc6MU2qEadx5FuYOyFpqSvMWwJe-g_N0-/exec';
+        const form = document.getElementById('data-form');
+        const submitButton = document.getElementById('submit-button');
+        const submitText = document.getElementById('submit-text');
+        const submitLoader = document.getElementById('submit-loader');
+        const message = document.getElementById('message');
+        
+        // Animasi saat halaman dimuat
+        const animatedElements = document.querySelectorAll('#form-header, .form-card');
+        animatedElements.forEach((el, index) => {
+            setTimeout(() => {
+                el.classList.add('visible');
+            }, (index + 1) * 150);
         });
-    </script>
+
+        function updateFileName(input) {
+            const name = input.name;
+            const fileName = input.files.length > 0 ? input.files[0].name : 'Tidak ada file.';
+            document.querySelector(`[data-file-name="${name}"]`).textContent = fileName;
+        }
+        window.updateFileName = updateFileName; // Membuat fungsi dapat diakses dari HTML
+
+        const fileToBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = reject;
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            submitButton.disabled = true;
+            submitText.classList.add('hidden');
+            submitLoader.classList.remove('hidden');
+            message.textContent = '';
+            message.classList.remove('text-green-600', 'text-red-500');
+
+            const formData = new FormData(form);
+            const data = {};
+            
+            for (const [key, value] of formData.entries()) {
+                if (key !== 'pilihan_risiko' && !key.startsWith('file_')) {
+                    data[key] = value;
+                }
+            }
+            
+            data['pilihan_risiko'] = Array.from(formData.getAll('pilihan_risiko'));
+
+            const fileInputs = form.querySelectorAll('input[type="file"]');
+            for (const input of fileInputs) {
+                if (input.files[0]) {
+                    try {
+                        const content = await fileToBase64(input.files[0]);
+                        data[input.name] = {
+                            filename: input.files[0].name,
+                            mimeType: input.files[0].type,
+                            content: content
+                        };
+                    } catch (error) {
+                        console.error('Error converting file:', error);
+                        message.textContent = `Gagal memproses file: ${input.files[0].name}.`;
+                        message.classList.add('text-red-500');
+                        submitButton.disabled = false;
+                        submitText.classList.remove('hidden');
+                        submitLoader.classList.add('hidden');
+                        return;
+                    }
+                } else {
+                     data[input.name] = null;
+                }
+            }
+
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(data)
+                });
+                
+                message.textContent = 'Data berhasil dikirim! Formulir akan direset.';
+                message.classList.add('text-green-600');
+                
+                setTimeout(() => {
+                    form.reset();
+                    document.querySelectorAll('[data-file-name]').forEach(el => el.textContent = 'Tidak ada file.');
+                    message.textContent = '';
+                }, 2500);
+
+            } catch (error) {
+                console.error('Error!', error.message);
+                message.textContent = `Gagal mengirim data. Error: ${error.message}.`;
+                message.classList.add('text-red-500');
+            } finally {
+                submitButton.disabled = false;
+                submitText.classList.remove('hidden');
+                submitLoader.classList.add('hidden');
+            }
+        });
+    });
+</script>
 </body>
 </html>
-
