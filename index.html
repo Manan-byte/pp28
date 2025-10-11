@@ -35,6 +35,7 @@
             background-color: #e2e8f0;
             border-radius: 0.75rem;
             padding: 0.25rem;
+            transition: all 0.2s ease-in-out;
         }
         .segmented-control-new input[type="radio"] { display: none; }
         .segmented-control-new label {
@@ -88,9 +89,18 @@
                     </div>
                     <div class="p-8 pt-2">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
-                            <div><label for="kode_kbli" class="block text-sm font-semibold text-slate-700 mb-2">Kode KBLI</label><input id="kode_kbli" name="kode_kbli" type="text" required class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition"></div>
-                            <div><label for="kode_rla" class="block text-sm font-semibold text-slate-700 mb-2">Kode RLA</label><input id="kode_rla" name="kode_rla" type="text" required class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition"></div>
-                            <div class="md:col-span-2"><label for="uraian" class="block text-sm font-semibold text-slate-700 mb-2">Uraian Ruang Lingkup</label><textarea id="uraian" name="uraian" rows="4" class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition"></textarea></div>
+                            <div>
+                                <label for="kode_kbli" class="block text-sm font-semibold text-slate-700 mb-2">Kode KBLI</label>
+                                <input id="kode_kbli" name="kode_kbli" type="text" inputmode="numeric" pattern="[0-9]*" required class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
+                            <div>
+                                <label for="kode_rla" class="block text-sm font-semibold text-slate-700 mb-2">Kode RLA</label>
+                                <input id="kode_rla" name="kode_rla" type="text" inputmode="numeric" pattern="[0-9]*" required class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="uraian" class="block text-sm font-semibold text-slate-700 mb-2">Uraian Ruang Lingkup</label>
+                                <textarea id="uraian" name="uraian" rows="4" required class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -135,15 +145,27 @@
                     <div class="p-8 pt-2 divide-y divide-slate-200/50">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 py-6 first:pt-0 last:pb-0">
                             <div class="md:col-span-1"><h3 class="text-base font-semibold text-slate-800">Kewenangan</h3></div>
-                            <div class="md:col-span-2 space-y-4"><div class="segmented-control-new"><input type="radio" id="kewenangan_sesuai" name="kewenangan_status" value="Sesuai"><label for="kewenangan_sesuai">Sesuai</label><input type="radio" id="kewenangan_tdk_sesuai" name="kewenangan_status" value="Tidak Sesuai"><label for="kewenangan_tdk_sesuai">Tidak Sesuai</label></div><input name="kewenangan_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Input Kewenangan..."><textarea name="kewenangan_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Catatan khusus untuk Kewenangan..."></textarea></div>
+                            <div class="md:col-span-2 space-y-4">
+                                <div class="segmented-control-new"><input type="radio" id="kewenangan_sesuai" name="kewenangan_status" value="Sesuai"><label for="kewenangan_sesuai">Sesuai</label><input type="radio" id="kewenangan_tdk_sesuai" name="kewenangan_status" value="Tidak Sesuai"><label for="kewenangan_tdk_sesuai">Tidak Sesuai</label></div>
+                                <input name="kewenangan_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Jumlah Kewenangan...">
+                                <textarea name="kewenangan_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Catatan khusus untuk Kewenangan..."></textarea>
+                            </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 py-6 first:pt-0 last:pb-0">
                              <div class="md:col-span-1"><h3 class="text-base font-semibold text-slate-800">Persyaratan</h3></div>
-                            <div class="md:col-span-2 space-y-4"><div class="segmented-control-new"><input type="radio" id="persyaratan_sesuai" name="persyaratan_status" value="Sesuai"><label for="persyaratan_sesuai">Sesuai</label><input type="radio" id="persyaratan_tdk_sesuai" name="persyaratan_status" value="Tidak Sesuai"><label for="persyaratan_tdk_sesuai">Tidak Sesuai</label></div><input name="persyaratan_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Input nomor Persyaratan..."><textarea name="persyaratan_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Catatan khusus untuk Persyaratan..."></textarea></div>
+                            <div class="md:col-span-2 space-y-4">
+                                <div class="segmented-control-new"><input type="radio" id="persyaratan_sesuai" name="persyaratan_status" value="Sesuai"><label for="persyaratan_sesuai">Sesuai</label><input type="radio" id="persyaratan_tdk_sesuai" name="persyaratan_status" value="Tidak Sesuai"><label for="persyaratan_tdk_sesuai">Tidak Sesuai</label></div>
+                                <input name="persyaratan_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Jumlah Persyaratan...">
+                                <textarea name="persyaratan_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Catatan khusus untuk Persyaratan..."></textarea>
+                            </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 py-6 first:pt-0 last:pb-0">
                              <div class="md:col-span-1"><h3 class="text-base font-semibold text-slate-800">Kewajiban</h3></div>
-                            <div class="md:col-span-2 space-y-4"><div class="segmented-control-new"><input type="radio" id="kewajiban_sesuai" name="kewajiban_status" value="Sesuai"><label for="kewajiban_sesuai">Sesuai</label><input type="radio" id="kewajiban_tdk_sesuai" name="kewajiban_status" value="Tidak Sesuai"><label for="kewajiban_tdk_sesuai">Tidak Sesuai</label></div><input name="kewajiban_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Input detail Kewajiban..."><textarea name="kewajiban_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Catatan khusus untuk Kewajiban..."></textarea></div>
+                            <div class="md:col-span-2 space-y-4">
+                                <div class="segmented-control-new"><input type="radio" id="kewajiban_sesuai" name="kewajiban_status" value="Sesuai"><label for="kewajiban_sesuai">Sesuai</label><input type="radio" id="kewajiban_tdk_sesuai" name="kewajiban_status" value="Tidak Sesuai"><label for="kewajiban_tdk_sesuai">Tidak Sesuai</label></div>
+                                <input name="kewajiban_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Jumlah Kewajiban...">
+                                <textarea name="kewajiban_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Catatan khusus untuk Kewajiban..."></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,7 +181,6 @@
         </div>
     </main>
     
-    <!-- SCRIPT BARU YANG MENGGABUNGKAN FILEREADER DENGAN DESAIN INI -->
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzylvP1iYoHNRcGNJBqRLPvR2ohskvymMLMIHIv6gJNx4YYHRgw3R1K2Mbf8UlXPJTY/exec';
         const form = document.getElementById('data-form');
@@ -169,7 +190,6 @@
         const loadingSpinner = document.getElementById('loading-spinner');
         const statusMessage = document.getElementById('status-message');
 
-        // Fungsi untuk menangani UI file upload
         function setupFileUploads() {
             const fileInputs = [
                 { inputId: 'risiko_mikro_file', filenameId: 'filename-mikro', target: 'mikro' },
@@ -197,7 +217,6 @@
             });
         }
         
-        // Fungsi untuk mereset tampilan UI file
         function resetAllFileUploads() {
              const filenameDisplays = document.querySelectorAll('[id^="filename-"]');
              filenameDisplays.forEach(display => {
@@ -209,7 +228,6 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             setupFileUploads();
-             // Animasi
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -221,34 +239,108 @@
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         });
 
-        // Event Listener untuk form submit
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // UI update saat loading
+            // --- VALIDASI BARU ---
+            statusMessage.textContent = '';
+            statusMessage.classList.remove('text-red-600', 'text-green-600');
+            
+            const sectionsToValidate = [
+                { check: 'risiko_mikro_check', status: 'risiko_mikro_status', name: 'Risiko Mikro' },
+                { check: 'risiko_kecil_check', status: 'risiko_kecil_status', name: 'Risiko Kecil' },
+                { check: 'risiko_menengah_check', status: 'risiko_menengah_status', name: 'Risiko Menengah' },
+                { check: 'risiko_besar_check', status: 'risiko_besar_status', name: 'Risiko Besar' }
+            ];
+
+            const otherSections = [
+                { status: 'kewenangan_status', name: 'Kewenangan' },
+                { status: 'persyaratan_status', name: 'Persyaratan' },
+                { status: 'kewajiban_status', name: 'Kewajiban' }
+            ];
+            
+            let firstErrorElement = null;
+            let errorMessageText = '';
+
+            // Validasi Tingkat Resiko (jika toggle aktif)
+            for (const section of sectionsToValidate) {
+                const toggle = document.querySelector(`input[name="${section.check}"]`);
+                if (toggle && toggle.checked) {
+                    const statusSelected = document.querySelector(`input[name="${section.status}"]:checked`);
+                    if (!statusSelected) {
+                        errorMessageText = `Status untuk ${section.name} wajib dipilih.`;
+                        firstErrorElement = document.querySelector(`input[name="${section.status}"]`).closest('.segmented-control-new');
+                        break;
+                    }
+                }
+            }
+
+            // Validasi Kewenangan, dll. (jika belum ada error)
+            if (!firstErrorElement) {
+                for (const section of otherSections) {
+                    const statusSelected = document.querySelector(`input[name="${section.status}"]:checked`);
+                    if (!statusSelected) {
+                        errorMessageText = `Status untuk ${section.name} wajib dipilih.`;
+                        firstErrorElement = document.querySelector(`input[name="${section.status}"]`).closest('.segmented-control-new');
+                        break;
+                    }
+                }
+            }
+
+            if (firstErrorElement) {
+                statusMessage.textContent = errorMessageText;
+                statusMessage.classList.add('text-red-600');
+                
+                firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstErrorElement.style.outline = '2px solid #ef4444'; // red-500
+                firstErrorElement.style.borderRadius = '0.75rem';
+                setTimeout(() => {
+                    firstErrorElement.style.outline = '';
+                }, 3000);
+
+                return; 
+            }
+            // --- AKHIR VALIDASI ---
+
             buttonText.textContent = 'Mengirim...';
             buttonIcon.classList.add('hidden');
             loadingSpinner.classList.remove('hidden');
             submitButton.disabled = true;
             statusMessage.textContent = 'Mempersiapkan data dan file...';
-            statusMessage.classList.remove('text-green-600', 'text-red-600');
 
-            // Menggunakan FormData untuk mengumpulkan semua data teks
-            const formData = new FormData(form);
+            const formData = new FormData();
+            
+            // Append all simple form fields
+            const formElements = form.elements;
+            for(let i=0; i<formElements.length; i++){
+                const element = formElements[i];
+                if(element.name && element.type !== 'file'){
+                    if(element.type === 'checkbox'){
+                         // Hanya kirim nilai 'true' jika dicentang
+                        if (element.checked) {
+                            formData.append(element.name, element.checked);
+                        }
+                    } else if (element.type === 'radio'){
+                         if(element.checked){
+                           formData.append(element.name, element.value);
+                         }
+                    } else {
+                        formData.append(element.name, element.value);
+                    }
+                }
+            }
 
-            // Proses file secara terpisah menggunakan FileReader
             const filePromises = [];
             const fileInputs = document.querySelectorAll('input[type="file"]');
 
             fileInputs.forEach(input => {
                 if (input.files.length > 0) {
                     const file = input.files[0];
-                    const target = input.dataset.target; // Dapatkan target dari atribut data-*
+                    const target = input.dataset.target;
                     
                     const promise = new Promise((resolve, reject) => {
                         const reader = new FileReader();
                         reader.onload = event => {
-                            // Tambahkan data file ke FormData
                             formData.append(`risiko_${target}_file_base64`, event.target.result);
                             formData.append(`risiko_${target}_file_filename`, file.name);
                             formData.append(`risiko_${target}_file_mimetype`, file.type);
@@ -264,12 +356,10 @@
             });
             
             try {
-                // Tunggu semua file selesai dibaca
                 await Promise.all(filePromises);
                 
                 statusMessage.textContent = 'Mengirim data ke server...';
 
-                // Kirim data gabungan (teks + base64 file) ke Google Script
                 const response = await fetch(scriptURL, { method: 'POST', body: formData });
                 const result = await response.json();
 
@@ -287,7 +377,6 @@
                 statusMessage.textContent = `Maaf, terjadi kesalahan: ${error.message}`;
                 statusMessage.classList.add('text-red-600');
             } finally {
-                // Reset UI tombol setelah selesai
                 setTimeout(() => {
                     buttonText.textContent = 'Kirim Data';
                     buttonIcon.classList.remove('hidden');
@@ -300,12 +389,5 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
 
 
