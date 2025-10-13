@@ -1,440 +1,1454 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Validasi Data KBLI - Desain Final</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9;
-            scroll-behavior: smooth;
-        }
-        .card-glass {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .form-input {
-            background-color: #f8fafc;
-            border-color: #e2e8f0;
-            transition: all 0.2s ease-in-out;
-        }
-        .form-input:focus {
-            background-color: #fff;
-            box-shadow: 0 0 0 2px #c7d2fe;
-            border-color: #6366f1;
-        }
-        .segmented-control-new {
-            display: inline-flex;
-            background-color: #e2e8f0;
-            border-radius: 0.75rem;
-            padding: 0.25rem;
-            transition: all 0.2s ease-in-out;
-        }
-        .segmented-control-new input[type="radio"] { display: none; }
-        .segmented-control-new label {
-            padding: 0.5rem 1.25rem;
-            cursor: pointer;
-            border-radius: 0.60rem;
-            transition: all 0.2s ease-in-out;
-            color: #475569;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-        .segmented-control-new input[type="radio"]:checked + label {
-            background-color: #ffffff;
-            color: #4f46e5;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            transition-delay: 0.2s;
-        }
-        .animate-on-scroll.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-        .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 24px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        input:checked + .slider { background-color: #4f46e5; }
-        input:checked + .slider:before { transform: translateX(20px); }
-        .autoresize-textarea {
-            resize: none;
-            overflow: hidden;
-            min-height: 50px;
-        }
-        /* Style untuk bagian yang dinonaktifkan */
-        .disabled-section {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aplikasi Validasi KBLI - Desain Pro</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body {
+font-family: 'Poppins', sans-serif;
+background-color: #f0f2f5;
+}
+.form-input {
+background-color: #ffffff;
+border: 1px solid #d9d9d9;
+transition: all 0.2s ease-in-out;
+border-radius: 0.5rem;
+}
+.form-input:focus {
+background-color: #ffffff;
+box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+border-color: #4f46e5;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+from { opacity: 1; transform: translateY(0); }
+to { opacity: 0; transform: translateY(-10px); }
+}
+.animate-fade-in {
+animation: fadeIn 0.5s ease-in-out forwards;
+}
+.animate-fade-out {
+animation: fadeOut 0.3s ease-in-out forwards;
+}
+.form-step {
+display: none;
+animation: fadeIn 0.5s ease-in-out;
+}
+.form-step.active {
+display: block;
+}
+.progress-bar-container {
+display: flex;
+justify-content: space-around;
+align-items: flex-start;
+padding: 0 2rem;
+}
+.step-item {
+display: flex;
+flex-direction: column;
+align-items: center;
+position: relative;
+flex-grow: 1;
+}
+.step-item:not(:last-child)::after {
+content: '';
+position: absolute;
+left: 50%;
+top: 18px;
+width: 100%;
+height: 2px;
+background-color: #e9ecef;
+z-index: 1;
+transition: background-color 0.4s ease-in-out;
+}
+.step-indicator {
+z-index: 2;
+width: 36px;
+height: 36px;
+border-radius: 50%;
+background-color: #ffffff;
+border: 2px solid #e9ecef;
+color: #adb5bd;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 600;
+transition: all 0.4s ease-in-out;
+margin-bottom: 8px;
+}
+.step-item.active .step-indicator {
+border-color: #4f46e5;
+background-color: #4f46e5;
+color: #ffffff;
+}
+.step-item.completed .step-indicator {
+border-color: #4f46e5;
+background-color: #4f46e5;
+color: #ffffff;
+}
+.step-item.completed:not(:last-child)::after {
+background-color: #4f46e5;
+}
+.step-label h3 {
+font-weight: 600;
+color: #adb5bd;
+transition: color 0.4s ease-in-out;
+}
+.step-label p {
+color: #adb5bd;
+transition: color 0.4s ease-in-out;
+}
+.step-item.active .step-label h3, .step-item.active .step-label p {
+color: #4f46e5;
+}
+.step-item.completed .step-label h3, .step-item.completed .step-label p {
+color: #333;
+}
+.status-button {
+background-color: #f8f9fa;
+border: 1px solid #dee2e6;
+color: #495057;
+padding: 0.75rem;
+border-radius: 0.5rem;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.5rem;
+transition: all 0.2s;
+}
+.status-button:hover { background-color: #f1f3f5; }
+.status-button.active-sesuai {
+border-color: #4ade80;
+background-color: #4ade80;
+color: #ffffff;
+}
+.status-button.active-tdk-sesuai {
+border-color: #f87171;
+background-color: #f87171;
+color: #ffffff;
+}
+.status-badge {
+display: none;
+font-size: 0.75rem;
+padding: 0.125rem 0.625rem;
+border-radius: 9999px;
+font-weight: 500;
+margin-left: 0.75rem;
+line-height: 1.25;
+}
+.status-badge.sesuai { background-color: #e6f7ff; color: #1890ff; }
+.status-badge.tdk-sesuai { background-color: #fff1f0; color: #f5222d; }
+.toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e2e8f0; transition: .3s; border-radius: 24px; }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+input:checked + .slider { background-color: #4f46e5; }
+input:checked + .slider:before { transform: translateX(20px); }
+.risiko-inputs.disabled-section,
+.final-inputs-container.disabled-section {
+opacity: 0.5;
+pointer-events: none;
+}
+.autoresize-textarea,
+.form-input.autoresize-manual {
+resize: none;
+overflow: hidden;
+}
+@keyframes shake {
+10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+.animate-shake { animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes fadeInUp {
+from { opacity: 0; transform: translate3d(0, 30px, 0); }
+to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-fade-in-up {
+animation: fadeInUp 0.5s ease-out forwards;
+}
+#data-table-container table {
+table-layout: fixed;
+}
+#data-table-container thead th:nth-child(1),
+#data-table-container tbody td:nth-child(1) { width: 15%; }
+#data-table-container thead th:nth-child(2),
+#data-table-container tbody td:nth-child(2) { width: 15%; }
+/* Kolom Uraian (child 3) sengaja tidak diberi lebar agar fleksibel */
+#data-table-container thead th:nth-child(4),
+#data-table-container tbody td:nth-child(4) { width: 15%; }
+#data-table-container thead th:nth-child(5),
+#data-table-container tbody td:nth-child(5) { width: 15%; }
+#data-table-container thead th:nth-child(6),
+#data-table-container tbody td:nth-child(6) { width: 120px; }
+
+#data-table-container tbody td {
+white-space: normal;
+}
+.accordion-content {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.5s ease-in-out;
+}
+.accordion-header.active .accordion-icon {
+transform: rotate(180deg);
+}
+</style>
 </head>
 <body class="min-h-screen">
-    <div class="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-br from-violet-200 via-indigo-200 to-blue-200 -z-10"></div>
-    <main class="py-16 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl w-full mx-auto space-y-10">
-            <header class="text-center animate-on-scroll">
-                <div class="w-20 h-20 mx-auto bg-white/80 border border-white/50 shadow-lg rounded-3xl flex items-center justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                </div>
-                <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">Validasi Data KBLI</h1>
-                <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Antarmuka baru yang lebih bersih dan intuitif untuk proses validasi data.</p>
-            </header>
-            <form id="data-form" name="data-form" class="space-y-8">
-                <div class="card-glass rounded-3xl shadow-lg animate-on-scroll">
-                    <div class="p-6 flex items-center space-x-4">
-                        <div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
-                        <h2 class="text-xl font-bold text-slate-900">Informasi Utama</h2>
-                    </div>
-                    <div class="p-8 pt-2">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
-                            <div>
-                                <label for="kode_kbli" class="block text-sm font-semibold text-slate-700 mb-2">Kode KBLI</label>
-                                <input id="kode_kbli" name="kode_kbli" type="text" inputmode="numeric" pattern="[0-9]*" required class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                            </div>
-                            <div>
-                                <label for="kode_rla" class="block text-sm font-semibold text-slate-700 mb-2">Kode RLA</label>
-                                <input id="kode_rla" name="kode_rla" type="text" inputmode="numeric" pattern="[0-9]*" required class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                            </div>
-                            <div class="md:col-span-2">
-                                <label for="uraian" class="block text-sm font-semibold text-slate-700 mb-2">Uraian Ruang Lingkup</label>
-                                <textarea id="uraian" name="uraian" rows="4" required class="form-input block w-full px-4 py-3 border rounded-xl placeholder-slate-400 focus:outline-none text-sm transition autoresize-textarea"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-glass rounded-3xl shadow-lg animate-on-scroll">
-                     <div class="p-6 flex items-center space-x-4">
-                         <div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div>
-                        <h2 class="text-xl font-bold text-slate-900">Tingkat Resiko</h2>
-                    </div>
-                    <div class="p-8 pt-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Card Mikro -->
-                        <div id="risiko-mikro-card" class="bg-white/70 rounded-2xl p-5 space-y-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                            <div class="flex items-center justify-between"><span class="text-sm font-bold text-slate-800">Mikro</span><label class="toggle-switch"><input name="risiko_mikro_check" type="checkbox"><span class="slider"></span></label></div>
-                            <div class="risiko-inputs space-y-4"><div class="segmented-control-new"><input type="radio" id="risiko_mikro_sesuai" name="risiko_mikro_status" value="Sesuai"><label for="risiko_mikro_sesuai">Sesuai</label><input type="radio" id="risiko_mikro_tdk_sesuai" name="risiko_mikro_status" value="Tdk Sesuai"><label for="risiko_mikro_tdk_sesuai">Tdk Sesuai</label></div><textarea name="risiko_mikro_catatan" rows="2" class="form-input w-full text-sm p-3 border rounded-lg autoresize-textarea" placeholder="Catatan untuk Mikro..."></textarea><div><label for="risiko_mikro_file" class="cursor-pointer inline-flex items-center gap-x-2 px-3 py-2 text-sm font-semibold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>Unggah</label><input id="risiko_mikro_file" type="file" class="hidden" data-target="mikro"><span id="filename-mikro" class="ml-3 text-sm text-slate-600 align-middle">Tidak ada file.</span></div></div>
-                        </div>
-                        <!-- Card Kecil -->
-                        <div id="risiko-kecil-card" class="bg-white/70 rounded-2xl p-5 space-y-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                             <div class="flex items-center justify-between"><span class="text-sm font-bold text-slate-800">Kecil</span><label class="toggle-switch"><input name="risiko_kecil_check" type="checkbox"><span class="slider"></span></label></div>
-                            <div class="risiko-inputs space-y-4"><div class="segmented-control-new"><input type="radio" id="risiko_kecil_sesuai" name="risiko_kecil_status" value="Sesuai"><label for="risiko_kecil_sesuai">Sesuai</label><input type="radio" id="risiko_kecil_tdk_sesuai" name="risiko_kecil_status" value="Tdk Sesuai"><label for="risiko_kecil_tdk_sesuai">Tdk Sesuai</label></div><textarea name="risiko_kecil_catatan" rows="2" class="form-input w-full text-sm p-3 border rounded-lg autoresize-textarea" placeholder="Catatan untuk Kecil..."></textarea><div><label for="risiko_kecil_file" class="cursor-pointer inline-flex items-center gap-x-2 px-3 py-2 text-sm font-semibold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>Unggah</label><input id="risiko_kecil_file" type="file" class="hidden" data-target="kecil"><span id="filename-kecil" class="ml-3 text-sm text-slate-600 align-middle">Tidak ada file.</span></div></div>
-                        </div>
-                        <!-- Card Menengah -->
-                        <div id="risiko-menengah-card" class="bg-white/70 rounded-2xl p-5 space-y-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                             <div class="flex items-center justify-between"><span class="text-sm font-bold text-slate-800">Menengah</span><label class="toggle-switch"><input name="risiko_menengah_check" type="checkbox"><span class="slider"></span></label></div>
-                            <div class="risiko-inputs space-y-4"><div class="segmented-control-new"><input type="radio" id="risiko_menengah_sesuai" name="risiko_menengah_status" value="Sesuai"><label for="risiko_menengah_sesuai">Sesuai</label><input type="radio" id="risiko_menengah_tdk_sesuai" name="risiko_menengah_status" value="Tdk Sesuai"><label for="risiko_menengah_tdk_sesuai">Tdk Sesuai</label></div><textarea name="risiko_menengah_catatan" rows="2" class="form-input w-full text-sm p-3 border rounded-lg autoresize-textarea" placeholder="Catatan untuk Menengah..."></textarea><div><label for="risiko_menengah_file" class="cursor-pointer inline-flex items-center gap-x-2 px-3 py-2 text-sm font-semibold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>Unggah</label><input id="risiko_menengah_file" type="file" class="hidden" data-target="menengah"><span id="filename-menengah" class="ml-3 text-sm text-slate-600 align-middle">Tidak ada file.</span></div></div>
-                        </div>
-                        <!-- Card Besar -->
-                        <div id="risiko-besar-card" class="bg-white/70 rounded-2xl p-5 space-y-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                             <div class="flex items-center justify-between"><span class="text-sm font-bold text-slate-800">Besar</span><label class="toggle-switch"><input name="risiko_besar_check" type="checkbox"><span class="slider"></span></label></div>
-                            <div class="risiko-inputs space-y-4"><div class="segmented-control-new"><input type="radio" id="risiko_besar_sesuai" name="risiko_besar_status" value="Sesuai"><label for="risiko_besar_sesuai">Sesuai</label><input type="radio" id="risiko_besar_tdk_sesuai" name="risiko_besar_status" value="Tdk Sesuai"><label for="risiko_besar_tdk_sesuai">Tdk Sesuai</label></div><textarea name="risiko_besar_catatan" rows="2" class="form-input w-full text-sm p-3 border rounded-lg autoresize-textarea" placeholder="Catatan untuk Besar..."></textarea><div><label for="risiko_besar_file" class="cursor-pointer inline-flex items-center gap-x-2 px-3 py-2 text-sm font-semibold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>Unggah</label><input id="risiko_besar_file" type="file" class="hidden" data-target="besar"><span id="filename-besar" class="ml-3 text-sm text-slate-600 align-middle">Tidak ada file.</span></div></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-glass rounded-3xl shadow-lg animate-on-scroll">
-                    <div class="p-6 flex items-center space-x-4"><div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg></div><h2 class="text-xl font-bold text-slate-900">Kewenangan, Persyaratan, & Kewajiban</h2></div>
-                    <div class="p-8 pt-2 divide-y divide-slate-200/50">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 py-6 first:pt-0 last:pb-0">
-                            <div class="md:col-span-1"><h3 class="text-base font-semibold text-slate-800">Kewenangan</h3></div>
-                            <div class="md:col-span-2 space-y-4"><div class="segmented-control-new"><input type="radio" id="kewenangan_sesuai" name="kewenangan_status" value="Sesuai"><label for="kewenangan_sesuai">Sesuai</label><input type="radio" id="kewenangan_tdk_sesuai" name="kewenangan_status" value="Tidak Sesuai"><label for="kewenangan_tdk_sesuai">Tidak Sesuai</label></div><input name="kewenangan_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Jumlah Kewenangan..."><textarea name="kewenangan_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg autoresize-textarea" placeholder="Catatan khusus untuk Kewenangan..."></textarea></div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 py-6 first:pt-0 last:pb-0">
-                             <div class="md:col-span-1"><h3 class="text-base font-semibold text-slate-800">Persyaratan</h3></div>
-                            <div class="md:col-span-2 space-y-4"><div class="segmented-control-new"><input type="radio" id="persyaratan_sesuai" name="persyaratan_status" value="Sesuai"><label for="persyaratan_sesuai">Sesuai</label><input type="radio" id="persyaratan_tdk_sesuai" name="persyaratan_status" value="Tidak Sesuai"><label for="persyaratan_tdk_sesuai">Tidak Sesuai</label></div><input name="persyaratan_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Jumlah Persyaratan..."><textarea name="persyaratan_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg autoresize-textarea" placeholder="Catatan khusus untuk Persyaratan..."></textarea></div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 py-6 first:pt-0 last:pb-0">
-                             <div class="md:col-span-1"><h3 class="text-base font-semibold text-slate-800">Kewajiban</h3></div>
-                            <div class="md:col-span-2 space-y-4"><div class="segmented-control-new"><input type="radio" id="kewajiban_sesuai" name="kewajiban_status" value="Sesuai"><label for="kewajiban_sesuai">Sesuai</label><input type="radio" id="kewajiban_tdk_sesuai" name="kewajiban_status" value="Tidak Sesuai"><label for="kewajiban_tdk_sesuai">Tidak Sesuai</label></div><input name="kewajiban_input" type="text" class="form-input w-full px-4 py-2 text-sm border rounded-lg" placeholder="Jumlah Kewajiban..."><textarea name="kewajiban_catatan" rows="2" class="form-input w-full px-4 py-2 text-sm border rounded-lg autoresize-textarea" placeholder="Catatan khusus untuk Kewajiban..."></textarea></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="pt-4 animate-on-scroll">
-                    <button type="submit" id="submit-button" class="group relative w-full flex items-center justify-center gap-x-3 py-4 px-4 border border-transparent text-base font-semibold rounded-2xl text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:translate-y-0 active:scale-[0.98] active:shadow-md">
-                        <span id="loading-spinner" class="hidden absolute left-6"><svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></span>
-                        <span id="button-text">Kirim Data</span>
-                        <svg id="button-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                    </button>
-                    <div id="status-message" class="text-center text-sm font-medium pt-5"></div>
-                </div>
-            </form>
-        </div>
-    </main>
+<div id="form-view" class="hidden">
+<header class="bg-white border-b border-gray-200/80 py-4 px-4 sm:px-6 lg:px-8">
+<div class="max-w-6xl mx-auto flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+</div>
+<div>
+<h2 class="text-lg font-bold text-gray-800">Validasi Data KBLI</h2>
+<p class="text-sm text-gray-500">Sistem Validasi Profesional</p>
+</div>
+</div>
+<div class="flex items-center gap-x-1 p-1 bg-gray-100 rounded-lg">
+<button data-view="dashboard" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+Dashboard
+</button>
+<button data-view="data" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M3.5 3A1.5 1.5 0 002 4.5v2A1.5 1.5 0 003.5 8h13A1.5 1.5 0 0018 6.5v-2A1.5 1.5 0 0016.5 3h-13zM2 11.5A1.5 1.5 0 013.5 10h13a1.5 1.5 0 011.5 1.5v2a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 012 13.5v-2zM3.5 17a1.5 1.5 0 00-1.5 1.5v.5h16v-.5a1.5 1.5 0 00-1.5-1.5h-13z" /></svg>
+Data
+</button>
+<button data-view="form" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V8.414A2 2 0 0017.414 7L13 2.586A2 2 0 0011.586 2H4zm5 8a1 1 0 100 2h4a1 1 0 100-2H9z" clip-rule="evenodd" /></svg>
+Form
+</button>
+</div>
+</div>
+</header>
+<main class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+<div class="max-w-6xl w-full mx-auto">
+<div class="mb-12">
+<div class="progress-bar-container">
+<div class="step-item active" data-step="1"><div class="step-indicator">1</div><div class="step-label"><h3 class="text-sm">Informasi Dasar</h3><p class="text-xs">Data KBLI & RLA</p></div></div>
+<div class="step-item" data-step="2"><div class="step-indicator">2</div><div class="step-label"><h3 class="text-sm">Tingkat Resiko</h3><p class="text-xs">Evaluasi resiko</p></div></div>
+<div class="step-item" data-step="3"><div class="step-indicator">3</div><div class="step-label"><h3 class="text-sm">Validasi Final</h3><p class="text-xs">Kewenangan & lainnya</p></div></div>
+</div>
+</div>
+<form id="data-form" name="data-form">
+<div class="bg-white border border-gray-200/60 rounded-xl shadow-sm">
+<div class="p-8 sm:p-10">
+<div id="step-1" class="form-step active">
+<div class="flex items-center space-x-4 mb-8"><div class="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg></div><div><h2 class="text-xl font-bold text-zinc-800">Informasi Dasar</h2><p class="text-zinc-500">Masukkan data KBLI dan RLA.</p></div></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div><label for="kode_kbli" class="block text-sm font-semibold text-zinc-700 mb-2">Kode KBLI <span class="text-red-500">*</span></label><input id="kode_kbli" name="kode_kbli" type="text" inputmode="numeric" pattern="[0-9]*" required class="form-input block w-full px-4 py-3 border placeholder-zinc-400 focus:outline-none text-base" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan kode KBLI"></div>
+<div><label for="kode_rla" class="block text-sm font-semibold text-zinc-700 mb-2">Kode RLA <span class="text-red-500">*</span></label><input id="kode_rla" name="kode_rla" type="text" inputmode="numeric" pattern="[0-9]*" required class="form-input block w-full px-4 py-3 border placeholder-zinc-400 focus:outline-none text-base" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan kode RLA"></div>
+<div class="sm:col-span-2"><label for="uraian" class="block text-sm font-semibold text-zinc-700 mb-2">Uraian Ruang Lingkup <span class="text-red-500">*</span></label><textarea id="uraian" name="uraian" rows="4" required class="form-input block w-full px-4 py-3 border placeholder-zinc-400 focus:outline-none text-base autoresize-textarea" placeholder="Jelaskan ruang lingkup secara detail..."></textarea></div>
+</div>
+</div>
+<div id="step-2" class="form-step">
+<div class="flex items-center space-x-4 mb-8"><div class="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div><div><h2 class="text-xl font-bold text-zinc-800">Tingkat Risiko</h2><p class="text-zinc-500">Evaluasi dan dokumentasi resiko.</p></div></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="border rounded-lg p-5 space-y-4"><div class="flex items-center justify-between"><div class="flex items-center"><h3 class="font-bold text-zinc-800">Mikro</h3><span class="status-badge"></span></div><label class="toggle-switch"><input name="risiko_mikro_check" type="checkbox"><span class="slider"></span></label></div><div class="risiko-inputs space-y-4"><input type="radio" name="risiko_mikro_status" value="Sesuai" class="hidden"><input type="radio" name="risiko_mikro_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-2"><button type="button" data-value="Sesuai" data-group="risiko_mikro_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="risiko_mikro_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><div><label class="block text-sm font-medium text-zinc-600 mb-1.5">Catatan</label><textarea name="risiko_mikro_catatan" rows="2" class="form-input w-full text-sm p-2 autoresize-manual" placeholder="Tambahkan catatan..."></textarea></div><div><label class="block text-sm font-medium text-zinc-600 mb-1.5">Dokumen Pendukung</label><label for="risiko_mikro_file" class="cursor-pointer flex flex-col items-center justify-center py-4 text-center border-2 border-dashed rounded-lg hover:bg-gray-50"><div id="dropzone-text-mikro"><svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg><p class="text-xs text-zinc-600 mt-1">Klik untuk upload atau drag & drop</p></div></label><input id="risiko_mikro_file" name="risiko_mikro_file" type="file" class="hidden"></div></div></div>
+<div class="border rounded-lg p-5 space-y-4"><div class="flex items-center justify-between"><div class="flex items-center"><h3 class="font-bold text-zinc-800">Kecil</h3><span class="status-badge"></span></div><label class="toggle-switch"><input name="risiko_kecil_check" type="checkbox"><span class="slider"></span></label></div><div class="risiko-inputs space-y-4"><input type="radio" name="risiko_kecil_status" value="Sesuai" class="hidden"><input type="radio" name="risiko_kecil_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-2"><button type="button" data-value="Sesuai" data-group="risiko_kecil_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="risiko_kecil_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><div><label class="block text-sm font-medium text-zinc-600 mb-1.5">Catatan</label><textarea name="risiko_kecil_catatan" rows="2" class="form-input w-full text-sm p-2 autoresize-manual" placeholder="Tambahkan catatan..."></textarea></div><div><label class="block text-sm font-medium text-zinc-600 mb-1.5">Dokumen Pendukung</label><label for="risiko_kecil_file" class="cursor-pointer flex flex-col items-center justify-center py-4 text-center border-2 border-dashed rounded-lg hover:bg-gray-50"><div id="dropzone-text-kecil"><svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg><p class="text-xs text-zinc-600 mt-1">Klik untuk upload atau drag & drop</p></div></label><input id="risiko_kecil_file" name="risiko_kecil_file" type="file" class="hidden"></div></div></div>
+<div class="border rounded-lg p-5 space-y-4"><div class="flex items-center justify-between"><div class="flex items-center"><h3 class="font-bold text-zinc-800">Menengah</h3><span class="status-badge"></span></div><label class="toggle-switch"><input name="risiko_menengah_check" type="checkbox"><span class="slider"></span></label></div><div class="risiko-inputs space-y-4"><input type="radio" name="risiko_menengah_status" value="Sesuai" class="hidden"><input type="radio" name="risiko_menengah_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-2"><button type="button" data-value="Sesuai" data-group="risiko_menengah_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="risiko_menengah_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><div><label class="block text-sm font-medium text-zinc-600 mb-1.5">Catatan</label><textarea name="risiko_menengah_catatan" rows="2" class="form-input w-full text-sm p-2 autoresize-manual" placeholder="Tambahkan catatan..."></textarea></div><div><label class="block text-sm font-medium text-zinc-600 mb-1.5">Dokumen Pendukung</label><label for="risiko_menengah_file" class="cursor-pointer flex flex-col items-center justify-center py-4 text-center border-2 border-dashed rounded-lg hover:bg-gray-50"><div id="dropzone-text-menengah"><svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg><p class="text-xs text-zinc-600 mt-1">Klik untuk upload atau drag & drop</p></div></label><input id="risiko_menengah_file" name="risiko_menengah_file" type="file" class="hidden"></div></div></div>
+<div class="border rounded-lg p-5 space-y-4"><div class="flex items-center justify-between"><div class="flex items-center"><h3 class="font-bold text-zinc-800">Besar</h3><span class="status-badge"></span></div><label class="toggle-switch"><input name="risiko_besar_check" type="checkbox"><span class="slider"></span></label></div><div class="risiko-inputs space-y-4"><input type="radio" name="risiko_besar_status" value="Sesuai" class="hidden"><input type="radio" name="risiko_besar_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-2"><button type="button" data-value="Sesuai" data-group="risiko_besar_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="risiko_besar_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><div><label class="block text-sm font-medium text-zinc-600 mb-1.5">Catatan</label><textarea name="risiko_besar_catatan" rows="2" class="form-input w-full text-sm p-2 autoresize-manual" placeholder="Tambahkan catatan..."></textarea></div><div><label class="block text-sm font-medium text-zinc-600 mb-1.5">Dokumen Pendukung</label><label for="risiko_besar_file" class="cursor-pointer flex flex-col items-center justify-center py-4 text-center border-2 border-dashed rounded-lg hover:bg-gray-50"><div id="dropzone-text-besar"><svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg><p class="text-xs text-zinc-600 mt-1">Klik untuk upload atau drag & drop</p></div></label><input id="risiko_besar_file" name="risiko_besar_file" type="file" class="hidden"></div></div></div>
+</div>
+</div>
+<div id="step-3" class="form-step">
+<div class="flex items-center space-x-4 mb-8">
+<div class="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+<div>
+<h2 class="text-xl font-bold text-zinc-800">Validasi Kewenangan & Tingkat Resiko</h2>
+<p class="text-zinc-500">Isi persyaratan, kewajiban, serta kewenangan untuk tiap tingkat resiko.</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="accordion-item bg-white border border-gray-200 rounded-lg overflow-hidden">
+<button type="button" class="accordion-header w-full flex items-center justify-between p-4 hover:bg-gray-50 transition">
+<div class="flex items-center gap-x-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
+<h3 class="font-bold text-zinc-800">Tingkat Resiko: <span class="text-blue-600">Micro</span></h3>
+</div>
+<div class="flex items-center gap-x-4">
+<label class="toggle-switch" onclick="event.stopPropagation()"><input name="final_micro_check" type="checkbox"><span class="slider"></span></label>
+<svg class="accordion-icon w-5 h-5 transition-transform text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+</div>
+</button>
+<div class="accordion-content final-inputs-container">
+<div class="p-6 space-y-6 border-t">
+<div class="accordion-section">
+<h4 class="text-base font-semibold text-zinc-700 mb-3">Persyaratan</h4>
+<div class="space-y-3">
+<input type="radio" name="persyaratan_micro_status" value="Sesuai" class="hidden"><input type="radio" name="persyaratan_micro_status" value="Tdk Sesuai" class="hidden">
+<div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="persyaratan_micro_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="persyaratan_micro_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div>
+<textarea name="persyaratan_micro_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea>
+<div><label for="persyaratan_micro_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="persyaratan_micro_jumlah" name="persyaratan_micro_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div>
+</div>
+</div>
+<div class="accordion-section">
+<h4 class="text-base font-semibold text-zinc-700 mb-3">Kewajiban</h4>
+<div class="space-y-3">
+<input type="radio" name="kewajiban_micro_status" value="Sesuai" class="hidden"><input type="radio" name="kewajiban_micro_status" value="Tdk Sesuai" class="hidden">
+<div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="kewajiban_micro_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="kewajiban_micro_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div>
+<textarea name="kewajiban_micro_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea>
+<div><label for="kewajiban_micro_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="kewajiban_micro_jumlah" name="kewajiban_micro_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div>
+</div>
+</div>
+<div class="accordion-section">
+<h4 class="text-base font-semibold text-zinc-700 mb-3">Kewenangan</h4>
+<div class="space-y-3">
+<input type="radio" name="kewenangan_micro_status" value="Sesuai" class="hidden"><input type="radio" name="kewenangan_micro_status" value="Tdk Sesuai" class="hidden">
+<div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="kewenangan_micro_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="kewenangan_micro_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div>
+<textarea name="kewenangan_micro_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea>
+<div><label for="kewenangan_micro_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="kewenangan_micro_jumlah" name="kewenangan_micro_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="accordion-item bg-white border border-gray-200 rounded-lg overflow-hidden">
+<button type="button" class="accordion-header w-full flex items-center justify-between p-4 hover:bg-gray-50 transition">
+<div class="flex items-center gap-x-3">
+<div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
+<h3 class="font-bold text-zinc-800">Tingkat Resiko: <span class="text-green-600">Kecil</span></h3>
+</div>
+<div class="flex items-center gap-x-4">
+<label class="toggle-switch" onclick="event.stopPropagation()"><input name="final_kecil_check" type="checkbox"><span class="slider"></span></label>
+<svg class="accordion-icon w-5 h-5 transition-transform text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+</div>
+</button>
+<div class="accordion-content final-inputs-container">
+<div class="p-6 space-y-6 border-t">
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Persyaratan</h4><div class="space-y-3"><input type="radio" name="persyaratan_kecil_status" value="Sesuai" class="hidden"><input type="radio" name="persyaratan_kecil_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="persyaratan_kecil_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="persyaratan_kecil_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="persyaratan_kecil_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="persyaratan_kecil_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="persyaratan_kecil_jumlah" name="persyaratan_kecil_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Kewajiban</h4><div class="space-y-3"><input type="radio" name="kewajiban_kecil_status" value="Sesuai" class="hidden"><input type="radio" name="kewajiban_kecil_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="kewajiban_kecil_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="kewajiban_kecil_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="kewajiban_kecil_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="kewajiban_kecil_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="kewajiban_kecil_jumlah" name="kewajiban_kecil_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Kewenangan</h4><div class="space-y-3"><input type="radio" name="kewenangan_kecil_status" value="Sesuai" class="hidden"><input type="radio" name="kewenangan_kecil_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="kewenangan_kecil_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="kewenangan_kecil_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="kewenangan_kecil_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="kewenangan_kecil_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="kewenangan_kecil_jumlah" name="kewenangan_kecil_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+</div>
+</div>
+</div>
+<div class="accordion-item bg-white border border-gray-200 rounded-lg overflow-hidden">
+<button type="button" class="accordion-header w-full flex items-center justify-between p-4 hover:bg-gray-50 transition">
+<div class="flex items-center gap-x-3">
+<div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
+<h3 class="font-bold text-zinc-800">Tingkat Resiko: <span class="text-orange-600">Menengah</span></h3>
+</div>
+<div class="flex items-center gap-x-4">
+<label class="toggle-switch" onclick="event.stopPropagation()"><input name="final_menengah_check" type="checkbox"><span class="slider"></span></label>
+<svg class="accordion-icon w-5 h-5 transition-transform text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+</div>
+</button>
+<div class="accordion-content final-inputs-container">
+<div class="p-6 space-y-6 border-t">
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Persyaratan</h4><div class="space-y-3"><input type="radio" name="persyaratan_menengah_status" value="Sesuai" class="hidden"><input type="radio" name="persyaratan_menengah_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="persyaratan_menengah_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="persyaratan_menengah_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="persyaratan_menengah_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="persyaratan_menengah_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="persyaratan_menengah_jumlah" name="persyaratan_menengah_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Kewajiban</h4><div class="space-y-3"><input type="radio" name="kewajiban_menengah_status" value="Sesuai" class="hidden"><input type="radio" name="kewajiban_menengah_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="kewajiban_menengah_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="kewajiban_menengah_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="kewajiban_menengah_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="kewajiban_menengah_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="kewajiban_menengah_jumlah" name="kewajiban_menengah_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Kewenangan</h4><div class="space-y-3"><input type="radio" name="kewenangan_menengah_status" value="Sesuai" class="hidden"><input type="radio" name="kewenangan_menengah_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="kewenangan_menengah_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="kewenangan_menengah_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="kewenangan_menengah_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="kewenangan_menengah_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="kewenangan_menengah_jumlah" name="kewenangan_menengah_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+</div>
+</div>
+</div>
+<div class="accordion-item bg-white border border-gray-200 rounded-lg overflow-hidden">
+<button type="button" class="accordion-header w-full flex items-center justify-between p-4 hover:bg-gray-50 transition">
+<div class="flex items-center gap-x-3">
+<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
+<h3 class="font-bold text-zinc-800">Tingkat Resiko: <span class="text-red-600">Besar</span></h3>
+</div>
+<div class="flex items-center gap-x-4">
+<label class="toggle-switch" onclick="event.stopPropagation()"><input name="final_besar_check" type="checkbox"><span class="slider"></span></label>
+<svg class="accordion-icon w-5 h-5 transition-transform text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+</div>
+</button>
+<div class="accordion-content final-inputs-container">
+<div class="p-6 space-y-6 border-t">
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Persyaratan</h4><div class="space-y-3"><input type="radio" name="persyaratan_besar_status" value="Sesuai" class="hidden"><input type="radio" name="persyaratan_besar_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="persyaratan_besar_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="persyaratan_besar_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="persyaratan_besar_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="persyaratan_besar_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="persyaratan_besar_jumlah" name="persyaratan_besar_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Kewajiban</h4><div class="space-y-3"><input type="radio" name="kewajiban_besar_status" value="Sesuai" class="hidden"><input type="radio" name="kewajiban_besar_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="kewajiban_besar_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="kewajiban_besar_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="kewajiban_besar_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="kewajiban_besar_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="kewajiban_besar_jumlah" name="kewajiban_besar_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+<div><h4 class="text-base font-semibold text-zinc-700 mb-3">Kewenangan</h4><div class="space-y-3"><input type="radio" name="kewenangan_besar_status" value="Sesuai" class="hidden"><input type="radio" name="kewenangan_besar_status" value="Tdk Sesuai" class="hidden"><div class="grid grid-cols-2 gap-3"><button type="button" data-value="Sesuai" data-group="kewenangan_besar_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>Sesuai</button><button type="button" data-value="Tdk Sesuai" data-group="kewenangan_besar_status" class="status-button text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Tdk Sesuai</button></div><textarea name="kewenangan_besar_catatan" rows="2" placeholder="Tambahkan catatan..." class="form-input w-full text-sm p-2.5 autoresize-manual"></textarea><div><label for="kewenangan_besar_jumlah" class="block text-sm font-medium text-zinc-600 mb-1.5">Jumlah</label><input id="kewenangan_besar_jumlah" name="kewenangan_besar_jumlah" type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan jumlah..." class="form-input w-full text-sm p-2.5"></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-center p-6 border-t border-gray-200/60">
+<button type="button" id="prevBtn" class="text-sm font-semibold text-zinc-600 hover:text-zinc-900 transition-colors py-3 px-6 rounded-lg bg-gray-100 hover:bg-gray-200">Sebelumnya</button>
+<div>
+<button type="button" id="nextBtn" class="group relative flex items-center justify-center gap-x-2 py-3 px-6 border border-transparent text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed">Selanjutnya <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg></button>
+<button type="submit" id="submit-button" class="group relative hidden items-center justify-center gap-x-3 py-3 px-6 border border-transparent text-base font-bold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700"><span id="loading-spinner" class="hidden absolute left-4"><svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></span><span id="button-text">Kirim Data</span></button>
+</div>
+</div>
+</div>
+<div id="status-message" class="text-center text-sm font-medium mt-6 p-4 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center justify-between gap-x-3">
+<div class="flex items-center gap-x-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>Pastikan semua field yang bertanda * sudah terisi dengan benar.</span></div>
+<button type="button" id="resetBtn" class="hidden text-sm font-semibold text-zinc-600 hover:text-zinc-900 transition-colors py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-300">Reset Data</button>
+</div>
+</form>
+</div>
+</main>
+</div>
+<div id="dashboard-view" class="hidden">
+<header class="bg-white border-b border-gray-200/80 py-4 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+<svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
+</svg>
+</div>
+<div>
+<h2 class="text-lg font-bold text-gray-800">Platform Manajemen Data Terpadu</h2>
+</div>
+</div>
+<div class="flex items-center gap-x-1 p-1 bg-gray-100 rounded-lg">
+<button data-view="dashboard" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+Dashboard
+</button>
+<button data-view="data" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M3.5 3A1.5 1.5 0 002 4.5v2A1.5 1.5 0 003.5 8h13A1.5 1.5 0 0018 6.5v-2A1.5 1.5 0 0016.5 3h-13zM2 11.5A1.5 1.5 0 013.5 10h13a1.5 1.5 0 011.5 1.5v2a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 012 13.5v-2zM3.5 17a1.5 1.5 0 00-1.5 1.5v.5h16v-.5a1.5 1.5 0 00-1.5-1.5h-13z" /></svg>
+Data
+</button>
+<button data-view="form" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V8.414A2 2 0 0017.414 7L13 2.586A2 2 0 0011.586 2H4zm5 8a1 1 0 100 2h4a1 1 0 100-2H9z" clip-rule="evenodd" /></svg>
+Form
+</button>
+</div>
+</div>
+</header>
+<main class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto">
+<div class="mb-8 p-8 relative rounded-2xl bg-gradient-to-r from-violet-100 to-fuchsia-100 border border-violet-200/50 overflow-hidden animate-fade-in-up" style="--animation-delay: 100ms;">
+<div class="relative z-10">
+<div class="flex items-center gap-x-4 mb-4">
+<div class="p-2 bg-white rounded-lg shadow-sm border">
+<svg class="w-6 h-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+</svg>
+</div>
+<h1 class="text-3xl font-bold text-gray-800">Dashboard Analytics</h1>
+</div>
+<p class="text-gray-600 max-w-lg">Kelola dan monitor <b id="total-data-banner" class="font-bold text-indigo-600">38.938</b> data KBLI dengan sistem validasi intelligent</p>
+<div class="mt-4 flex items-center gap-x-3">
+<span id="compliance-rate-badge" class="text-xs font-semibold bg-green-100 text-green-800 px-3 py-1 rounded-full">90.1% Compliance Rate</span>
+<span class="text-xs font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Real-time Monitoring</span>
+</div>
+</div>
+<svg class="absolute right-8 top-1/2 -translate-y-1/2 h-24 w-24 text-violet-300 opacity-50" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+</svg>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white border border-gray-200/60 rounded-2xl p-6 animate-fade-in-up" style="animation-delay: 200ms;">
+<div class="flex items-center justify-between">
+<p class="text-sm font-medium text-gray-500">Total Data</p>
+<div class="p-1.5 bg-gray-100 rounded-full">
+<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" /></svg>
+</div>
+</div>
+<p id="total-data-card" class="text-3xl font-bold text-gray-800 mt-2">0</p>
+<p class="text-xs text-gray-400 mt-1">Seluruh data KBLI</p>
+</div>
+<div class="bg-white border border-gray-200/60 rounded-2xl p-6 animate-fade-in-up" style="animation-delay: 300ms;">
+<div class="flex items-center justify-between">
+<p class="text-sm font-medium text-gray-500">Tervalidasi</p>
+<div class="p-1.5 bg-green-100 rounded-full">
+<svg class="w-5 h-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+</div>
+</div>
+<p id="tervalidasi-card" class="text-3xl font-bold text-gray-800 mt-2">0</p>
+<p id="tervalidasi-percent" class="text-xs text-gray-400 mt-1">0% dari total data</p>
+</div>
+<div class="bg-white border border-gray-200/60 rounded-2xl p-6 animate-fade-in-up" style="animation-delay: 400ms;">
+<div class="flex items-center justify-between">
+<p class="text-sm font-medium text-gray-500">Sesuai Standar</p>
+<div class="p-1.5 bg-green-100 rounded-full">
+<svg class="w-5 h-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+</div>
+</div>
+<p id="sesuai-card" class="text-3xl font-bold text-green-600 mt-2">0</p>
+<p id="sesuai-percent" class="text-xs text-gray-400 mt-1">0% tingkat kepatuhan</p>
+</div>
+<div class="bg-white border border-gray-200/60 rounded-2xl p-6 animate-fade-in-up" style="animation-delay: 500ms;">
+<div class="flex items-center justify-between">
+<p class="text-sm font-medium text-gray-500">Perlu Review</p>
+<div class="p-1.5 bg-red-100 rounded-full">
+<svg class="w-5 h-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+</div>
+</div>
+<p id="tidak-sesuai-card" class="text-3xl font-bold text-red-500 mt-2">0</p>
+<p class="text-xs text-gray-400 mt-1">Memerlukan tindakan korektif</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white border border-gray-200/80 rounded-2xl p-6 animate-fade-in-up" style="animation-delay: 600ms;">
+<div class="flex items-center gap-x-3">
+<div class="p-2 bg-blue-100 rounded-lg">
+<svg class="w-6 h-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" />
+</svg>
+</div>
+<h2 class="text-xl font-bold text-gray-800">Data Management</h2>
+</div>
+<p class="text-gray-500 mt-2 text-sm leading-6">Akses lengkap ke database KBLI dengan fitur pencarian advanced, filtering multi-kriteria, dan export data dalam berbagai format.</p>
+<button id="open-data-table-btn" class="mt-4 w-full inline-flex items-center justify-center gap-x-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+Buka Data Table
+</button>
+</div>
+<div class="bg-white border border-gray-200/80 rounded-2xl p-6 animate-fade-in-up" style="animation-delay: 700ms;">
+<div class="flex items-center gap-x-3">
+<div class="p-2 bg-orange-100 rounded-lg">
+<svg class="w-6 h-6 text-orange-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+</svg>
+</div>
+<h2 class="text-xl font-bold text-gray-800">Validasi Baru</h2>
+</div>
+<p class="text-gray-500 mt-2 text-sm leading-6">Proses validasi data KBLI dengan wizard multi-step yang intuitif, dilengkapi dengan validasi real-time dan panduan contextual.</p>
+<button id="start-validation-btn" class="mt-4 w-full inline-flex items-center justify-center gap-x-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+Mulai Validasi
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<div id="data-view" class="hidden">
+<header class="bg-white border-b border-gray-200/80 py-4 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+</div>
+<div>
+<h2 class="text-lg font-bold text-gray-800">Validasi Data KBLI</h2>
+<p class="text-sm text-gray-500">Sistem Validasi Profesional</p>
+</div>
+</div>
+<div class="flex items-center gap-x-1 p-1 bg-gray-100 rounded-lg">
+<button data-view="dashboard" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+Dashboard
+</button>
+<button data-view="data" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M3.5 3A1.5 1.5 0 002 4.5v2A1.5 1.5 0 003.5 8h13A1.5 1.5 0 0018 6.5v-2A1.5 1.5 0 0016.5 3h-13zM2 11.5A1.5 1.5 0 013.5 10h13a1.5 1.5 0 011.5 1.5v2a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 012 13.5v-2zM3.5 17a1.5 1.5 0 00-1.5 1.5v.5h16v-.5a1.5 1.5 0 00-1.5-1.5h-13z" /></svg>
+Data
+</button>
+<button data-view="form" class="nav-btn inline-flex items-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold">
+<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V8.414A2 2 0 0017.414 7L13 2.586A2 2 0 0011.586 2H4zm5 8a1 1 0 100 2h4a1 1 0 100-2H9z" clip-rule="evenodd" /></svg>
+Form
+</button>
+</div>
+</div>
+</header>
+<main class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+<div>
+<h1 class="text-3xl font-bold text-gray-800">Manajemen Data Validasi</h1>
+<p class="text-gray-500 mt-1">Kelola semua data validasi KBLI Anda di satu tempat</p>
+</div>
+<button id="add-new-data-btn" class="mt-4 sm:mt-0 inline-flex items-center gap-x-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+</svg>
+Tambah Data
+</button>
+</div>
+<div class="flex items-center gap-x-4 mb-6 p-4 bg-white rounded-xl border border-gray-200">
+<div class="relative flex-grow">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4"><svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg></div>
+<input type="text" id="search-input" placeholder="Cari berdasarkan kode KBLI, RLA, atau uraian..." class="block w-full rounded-lg border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500">
+</div>
+<div class="relative">
+<button id="filter-btn" type="button" class="inline-flex items-center justify-between w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" /></svg>
+<span id="filter-btn-text">Semua Status</span>
+<svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+</button>
+<div id="filter-dropdown" class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+<a href="#" class="filter-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-value="Semua Status">Semua Status</a>
+<a href="#" class="filter-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-value="Sesuai">Sesuai</a>
+<a href="#" class="filter-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-value="Tidak Sesuai">Tidak Sesuai</a>
+</div>
+</div>
+</div>
+</div>
+<div class="text-sm text-gray-600 mb-6">
+Menampilkan <b id="search-results-count" class="font-semibold">0</b> dari total <b id="total-data-count" class="font-semibold">0</b> data.
+</div>
+<div class="mb-6 p-4 rounded-lg bg-indigo-50 text-indigo-800 border border-indigo-200 flex items-center gap-x-3">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+<path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+<span class="text-sm">
+Status akan menjadi <b class="font-semibold">"Tidak Sesuai"</b> jika ada satu atau lebih detail data yang tidak sesuai.
+</span>
+</div>
+<div id="data-table-container">
+</div>
+<div id="pagination-wrapper" class="mt-6 border-t pt-4"></div>
+</div>
+</main>
+</div>
+<div id="message-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50">
+<div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+<div class="mt-3 text-center">
+<div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+<h3 class="text-lg leading-6 font-medium text-gray-900 mt-2">Informasi</h3>
+<div class="mt-2 px-7 py-3"><p id="modal-message-text" class="text-sm text-gray-500"></p></div>
+<div class="items-center px-4 py-3"><button id="modal-close-btn" class="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-indigo-600">Tutup</button></div>
+</div>
+</div>
+</div>
+<div id="confirm-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50">
+<div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+<div class="mt-3 text-center">
+<div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg></div>
+<h3 class="text-lg leading-6 font-medium text-gray-900 mt-2">Konfirmasi Hapus</h3>
+<div class="mt-2 px-7 py-3"><p id="confirm-modal-text" class="text-sm text-gray-500"></p></div>
+<div class="flex items-center justify-center gap-x-4 px-4 py-3">
+<button id="confirm-cancel-btn" class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-300">Batal</button>
+<button id="confirm-delete-btn" class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-700">Ya, Hapus</button>
+</div>
+</div>
+</div>
+</div>
+<div id="detail-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 h-full w-full z-50 flex items-center justify-center animate-fade-in">
+<div class="relative bg-white rounded-2xl shadow-xl w-full max-w-6xl h-full max-h-[90vh] m-8 flex flex-col">
+<div class="flex items-center justify-between p-6 border-b">
+<h2 id="detail-modal-title" class="text-2xl font-bold text-gray-800">Detail Validasi</h2>
+<button id="detail-modal-close" class="p-2 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+</button>
+</div>
+<div class="flex-grow overflow-y-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div id="detail-image-gallery" class="relative w-full h-full min-h-[400px] bg-gray-100 rounded-lg flex items-center justify-center">
+<img id="detail-modal-image" src="" class="max-w-full max-h-full object-contain rounded-lg">
+<div id="detail-no-image" class="hidden text-center text-gray-500">
+<svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+<p class="mt-2">Tidak ada foto</p>
+</div>
+<button id="detail-image-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75 transition disabled:opacity-25 disabled:cursor-not-allowed">
+<svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+</button>
+<button id="detail-image-next" class="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75 transition disabled:opacity-25 disabled:cursor-not-allowed">
+<svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+</button>
+<div id="detail-image-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black bg-opacity-50 rounded-full px-3 py-1 text-sm"></div>
+</div>
+<div id="detail-modal-content" class="space-y-6">
+</div>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+const SCRIPT_URL_POST = 'https://script.google.com/macros/s/AKfycbxj7LBL29cL0WCeZ-iK1jvlYay94rdwUHRnrXqNQAHTVCbHBMu8SOojYHTUFpTDXiDs7Q/exec';
+const SCRIPT_URL_GET = 'https://script.google.com/macros/s/AKfycbxj7LBL29cL0WCeZ-iK1jvlYay94rdwUHRnrXqNQAHTVCbHBMu8SOojYHTUFpTDXiDs7Q/exec';
+const formView = document.getElementById('form-view');
+const dataView = document.getElementById('data-view');
+const dashboardView = document.getElementById('dashboard-view');
+const searchInput = document.getElementById('search-input');
+const dataTableContainer = document.getElementById('data-table-container');
+const paginationWrapper = document.getElementById('pagination-wrapper');
+const messageModal = document.getElementById('message-modal');
+const modalMessageText = document.getElementById('modal-message-text');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const confirmModal = document.getElementById('confirm-modal');
+const confirmModalText = document.getElementById('confirm-modal-text');
+const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+const detailModal = document.getElementById('detail-modal');
+const detailModalTitle = document.getElementById('detail-modal-title');
+const detailModalContent = document.getElementById('detail-modal-content');
+const detailModalClose = document.getElementById('detail-modal-close');
+const detailImageGallery = document.getElementById('detail-image-gallery');
+const detailModalImage = document.getElementById('detail-modal-image');
+const detailNoImage = document.getElementById('detail-no-image');
+const detailImagePrev = document.getElementById('detail-image-prev');
+const detailImageNext = document.getElementById('detail-image-next');
+const detailImageCounter = document.getElementById('detail-image-counter');
+const filterBtn = document.getElementById('filter-btn');
+const filterBtnText = document.getElementById('filter-btn-text');
+const filterDropdown = document.getElementById('filter-dropdown');
+const addNewDataBtn = document.getElementById('add-new-data-btn');
+const openDataTableBtn = document.getElementById('open-data-table-btn');
+const startValidationBtn = document.getElementById('start-validation-btn');
+const form = document.getElementById('data-form');
+const submitButton = document.getElementById('submit-button');
+const statusMessageContainer = document.getElementById('status-message');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const resetBtn = document.getElementById('resetBtn');
+let currentStep = 1;
+const totalSteps = 3;
+let allData = [];
+let currentStatusFilter = 'Semua Status';
+let currentPage = 1;
+const rowsPerPage = 10;
+let isSwitching = false;
+const allViews = [dashboardView, dataView, formView];
+let currentImages = [];
+let currentImageIndex = 0;
+const showMessage = (message) => {
+modalMessageText.textContent = message;
+messageModal.classList.remove('hidden');
+}
+modalCloseBtn.addEventListener('click', () => messageModal.classList.add('hidden'));
+const showConfirmModal = (message, onConfirm) => {
+confirmModalText.textContent = message;
+confirmModal.classList.remove('hidden');
+confirmDeleteBtn.onclick = () => {
+onConfirm();
+confirmModal.classList.add('hidden');
+};
+};
+confirmCancelBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));
+detailModalClose.addEventListener('click', () => detailModal.classList.add('hidden'));
+window.addEventListener('click', (e) => {
+if (e.target === messageModal) messageModal.classList.add('hidden');
+if (e.target === confirmModal) confirmModal.classList.add('hidden');
+if (e.target === detailModal) detailModal.classList.add('hidden');
+if (filterBtn && !filterBtn.contains(e.target) && !filterDropdown.contains(e.target)) {
+filterDropdown.classList.add('hidden');
+}
+});
+const updateActiveNav = (activeView) => {
+document.querySelectorAll('.nav-btn').forEach(btn => {
+btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+btn.classList.add('text-gray-600', 'hover:bg-gray-200');
+});
+document.querySelectorAll(`.nav-btn[data-view="${activeView}"]`).forEach(btn => {
+btn.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+btn.classList.remove('text-gray-600', 'hover:bg-gray-200');
+});
+};
+const switchView = (viewToShowId) => {
+if (isSwitching) return;
+isSwitching = true;
+const viewToShow = document.getElementById(viewToShowId);
+if (!viewToShow) {
+isSwitching = false;
+return;
+}
+let activeView = null;
+allViews.forEach(view => {
+if (!view.classList.contains('hidden')) {
+activeView = view;
+}
+});
+if (activeView && activeView.id === viewToShowId) {
+isSwitching = false;
+return;
+}
+if (activeView) {
+activeView.classList.add('animate-fade-out');
+activeView.classList.remove('animate-fade-in');
+}
+setTimeout(() => {
+if (activeView) {
+activeView.classList.add('hidden');
+activeView.classList.remove('animate-fade-out');
+}
+viewToShow.classList.remove('hidden');
+viewToShow.classList.add('animate-fade-in');
+const viewName = viewToShowId.replace('-view', '');
+updateActiveNav(viewName);
+if (viewToShowId === 'form-view') {
+document.body.style.backgroundColor = '#f0f2f5';
+resetFormUI();
+} else {
+document.body.style.backgroundColor = '#f8fafc';
+if (viewToShowId === 'data-view') {
+fetchData(false);
+} else if (viewToShowId === 'dashboard-view') {
+fetchData(true);
+}
+}
+setTimeout(() => {
+isSwitching = false;
+}, 300);
+}, activeView ? 300 : 0);
+};
+document.body.addEventListener('click', (e) => {
+const navButton = e.target.closest('.nav-btn');
+if (navButton) {
+const viewId = `${navButton.dataset.view}-view`;
+switchView(viewId);
+}
+});
+if(addNewDataBtn) addNewDataBtn.addEventListener('click', () => switchView('form-view'));
+if(openDataTableBtn) openDataTableBtn.addEventListener('click', () => switchView('data-view'));
+if(startValidationBtn) startValidationBtn.addEventListener('click', () => switchView('form-view'));
+const fetchData = (isDashboard) => {
+const loaderIds = ['total-data-card', 'tervalidasi-card', 'sesuai-card', 'tidak-sesuai-card', 'total-data-banner'];
+if (isDashboard) {
+loaderIds.forEach(id => {
+const el = document.getElementById(id);
+if(el) el.textContent = '...';
+});
+} else {
+displayNoData('Sedang memuat data, mohon tunggu...');
+}
+fetch(SCRIPT_URL_GET)
+.then(response => {
+if (!response.ok) throw new Error('Network response was not ok.');
+return response.json();
+})
+.then(result => {
+if (result.status !== 'success' || !Array.isArray(result.data)) {
+throw new Error(result.message || "Format data tidak sesuai.");
+}
+allData = result.data.filter(row => row.uniqueId && row.uniqueId !== "");
+updateDashboardSummary(allData);
+if (!isDashboard) {
+applyFilters();
+}
+})
+.catch(error => {
+console.error('Error fetching data:', error);
+if(!isDashboard) {
+displayNoData('Gagal memuat data. Pastikan URL, izin, dan format data dari Google Script sudah benar.');
+}
+});
+};
+const deleteRow = (uniqueId) => {
+showMessage('Sedang menghapus data...');
+const url = `${SCRIPT_URL_POST}?action=delete&uniqueId=${encodeURIComponent(uniqueId)}`;
+fetch(url, { method: 'POST' })
+.then(response => response.json())
+.then(result => {
+if (result.status === 'success') {
+showMessage('Data berhasil dihapus.');
+const isDashboardActive = !dashboardView.classList.contains('hidden');
+fetchData(isDashboardActive);
+} else {
+throw new Error(result.message || 'Gagal menghapus data dari script.');
+}
+})
+.catch(error => {
+console.error('Error deleting data:', error);
+showMessage(error.message);
+});
+};
+function setupPagination(items, wrapper) {
+wrapper.innerHTML = "";
+const pageCount = Math.ceil(items.length / rowsPerPage);
+if (pageCount <= 1) return;
+const summaryText = document.createElement('div');
+summaryText.className = 'text-gray-600 text-sm';
+const startItem = (currentPage - 1) * rowsPerPage + 1;
+const endItem = Math.min(startItem + rowsPerPage - 1, items.length);
+summaryText.innerHTML = `Menampilkan <span class="font-semibold">${startItem}</span> - <span class="font-semibold">${endItem}</span> dari <span class="font-semibold">${items.length}</span> data`;
+const buttonsWrapper = document.createElement('div');
+buttonsWrapper.className = 'flex items-center gap-x-2';
+const prevButton = document.createElement('button');
+prevButton.textContent = 'Sebelumnya';
+prevButton.className = 'px-3 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm';
+if (currentPage === 1) prevButton.disabled = true;
+prevButton.addEventListener('click', () => {
+currentPage--;
+displayData(items);
+});
+buttonsWrapper.appendChild(prevButton);
+for (let i = 1; i <= pageCount; i++) {
+const pageButton = document.createElement('button');
+pageButton.textContent = i;
+if (i === currentPage) {
+pageButton.className = 'px-4 py-2 border border-indigo-600 rounded-md bg-indigo-600 text-white text-sm';
+} else {
+pageButton.className = 'px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 text-sm';
+pageButton.addEventListener('click', () => {
+currentPage = i;
+displayData(items);
+});
+}
+buttonsWrapper.appendChild(pageButton);
+}
+const nextButton = document.createElement('button');
+nextButton.textContent = 'Selanjutnya';
+nextButton.className = 'px-3 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm';
+if (currentPage === pageCount) nextButton.disabled = true;
+nextButton.addEventListener('click', () => {
+currentPage++;
+displayData(items);
+});
+buttonsWrapper.appendChild(nextButton);
+wrapper.classList.add('flex', 'items-center', 'justify-between');
+wrapper.appendChild(summaryText);
+wrapper.appendChild(buttonsWrapper);
+}
+const displayData = (data) => {
+const start = (currentPage - 1) * rowsPerPage;
+const end = start + rowsPerPage;
+const paginatedItems = data.slice(start, end);
+document.getElementById('search-results-count').textContent = data.length;
+document.getElementById('total-data-count').textContent = allData.length;
+if (data.length === 0) {
+if(searchInput.value !== '' || currentStatusFilter !== 'Semua Status') {
+displayNoData('Tidak ada data yang cocok dengan pencarian atau filter Anda.');
+} else {
+displayNoData('Belum ada data validasi. Mulai dengan mengisi form.');
+}
+paginationWrapper.innerHTML = '';
+return;
+}
+dataTableContainer.innerHTML = `
+<div class="bg-white rounded-xl border border-gray-200 overflow-x-auto">
+<table class="w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode KBLI</th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode RLA</th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Uraian</th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+<th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200">
+${paginatedItems.map((row) => {
+let isNonCompliant = row.details ? row.details.some(d => d.status && (String(d.status).toLowerCase().includes('tdk') || String(d.status).toLowerCase().includes('tidak'))) : false;
+let overallStatus = isNonCompliant ? 'Tidak Sesuai' : 'Sesuai';
+const statusHtml = overallStatus === 'Sesuai'
+? `<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">${overallStatus}</span>`
+: `<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">${overallStatus}</span>`;
+return `
+<tr>
+<td class="px-6 py-4 text-sm font-medium text-gray-900">${row.kode_kbli || '-'}</td>
+<td class="px-6 py-4 text-sm text-gray-500">${row.kode_rla || '-'}</td>
+<td class="px-6 py-4 text-sm text-gray-500">${row.uraian || '-'}</td>
+<td class="px-6 py-4 text-sm">${statusHtml}</td>
+<td class="px-6 py-4 text-sm text-gray-500">${new Date(row.timestamp).toLocaleDateString('id-ID') || '-'}</td>
+<td class="px-6 py-4 text-right text-sm font-medium flex items-center justify-end gap-x-2">
+<button data-action="view-details" data-unique-id="${row.uniqueId}" class="p-2 rounded-md text-gray-400 hover:bg-gray-100 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+<svg class="w-5 h-5 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+</button>
+<button data-action="delete" data-unique-id="${row.uniqueId}" data-kbli="${row.kode_kbli}" class="p-2 rounded-md text-gray-400 hover:bg-gray-100 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+<svg class="h-5 w-5 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg>
+</button>
+</td>
+</tr>
+`
+}).join('')}
+</tbody>
+</table>
+</div>
+`;
+setupPagination(data, paginationWrapper);
+};
+const displayNoData = (message) => {
+dataTableContainer.innerHTML = `
+<div class="rounded-xl border-2 border-dashed border-gray-300 bg-white">
+<div class="flex flex-col items-center justify-center p-12 text-center">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+<path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+</svg>
+<h3 class="mt-4 text-lg font-semibold text-gray-800">Tidak ada data</h3>
+<p class="mt-1 text-sm text-gray-500">${message}</p>
+</div>
+</div>
+`;
+};
+const updateDashboardSummary = (data) => {
+const totalData = data.length;
+let sesuaiCount = 0;
+data.forEach(row => {
+const isNonCompliant = row.details ? row.details.some(d => d.status && (String(d.status).toLowerCase().includes('tdk') || String(d.status).toLowerCase().includes('tidak'))) : false;
+if (!isNonCompliant) {
+sesuaiCount++;
+}
+});
+const tidakSesuaiCount = totalData - sesuaiCount;
+const tervalidasiPercent = totalData > 0 ? ((totalData / totalData) * 100).toFixed(1) : 0;
+const sesuaiPercent = totalData > 0 ? ((sesuaiCount / totalData) * 100).toFixed(1) : 0;
+document.getElementById('total-data-card').textContent = totalData.toLocaleString('id-ID');
+document.getElementById('total-data-banner').textContent = totalData.toLocaleString('id-ID');
+document.getElementById('tervalidasi-card').textContent = totalData.toLocaleString('id-ID');
+document.getElementById('tervalidasi-percent').textContent = `${tervalidasiPercent}% dari total data`;
+document.getElementById('sesuai-card').textContent = sesuaiCount.toLocaleString('id-ID');
+document.getElementById('sesuai-percent').textContent = `${sesuaiPercent}% tingkat kepatuhan`;
+document.getElementById('compliance-rate-badge').textContent = `${sesuaiPercent}% Compliance Rate`;
+document.getElementById('tidak-sesuai-card').textContent = tidakSesuaiCount.toLocaleString('id-ID');
+};
+const applyFilters = () => {
+const searchTerm = searchInput.value.toLowerCase();
+let filteredData = allData;
+if (searchTerm) {
+filteredData = filteredData.filter(row => {
+const isNumericSearch = /^\d+$/.test(searchTerm);
+const uraianMatch = row.uraian && String(row.uraian).toLowerCase().includes(searchTerm);
+if (isNumericSearch) {
+const kbliMatch = row.kode_kbli && String(row.kode_kbli).toLowerCase().startsWith(searchTerm);
+const rlaMatch = row.kode_rla && String(row.kode_rla).toLowerCase().includes(searchTerm);
+return kbliMatch || rlaMatch || uraianMatch;
+} else {
+return uraianMatch;
+}
+});
+}
+if (currentStatusFilter !== 'Semua Status') {
+filteredData = filteredData.filter(row => {
+const isNonCompliant = row.details ? row.details.some(d => d.status && (String(d.status).toLowerCase().includes('tdk') || String(d.status).toLowerCase().includes('tidak'))) : false;
+const overallStatus = isNonCompliant ? 'Tidak Sesuai' : 'Sesuai';
+return overallStatus === currentStatusFilter;
+});
+}
+currentPage = 1;
+displayData(filteredData);
+};
+searchInput.addEventListener('input', applyFilters);
+filterBtn.addEventListener('click', () => {
+filterDropdown.classList.toggle('hidden');
+});
+document.querySelectorAll('.filter-option').forEach(option => {
+option.addEventListener('click', (e) => {
+e.preventDefault();
+currentStatusFilter = e.target.dataset.value;
+filterBtnText.textContent = currentStatusFilter;
+filterDropdown.classList.add('hidden');
+applyFilters();
+});
+});
+dataTableContainer.addEventListener('click', (e) => {
+const button = e.target.closest('button[data-action]');
+if (!button) return;
+const action = button.dataset.action;
+const uniqueId = button.dataset.uniqueId;
+if (action === 'delete') {
+const kbli = button.dataset.kbli;
+showConfirmModal(`Anda yakin ingin menghapus data KBLI ${kbli}?`, () => {
+deleteRow(uniqueId);
+});
+} else if (action === 'view-details') {
+const rowData = allData.find(d => d.uniqueId === uniqueId);
+if (rowData) {
+showDetailModal(rowData);
+}
+}
+});
+const showDetailModal = (rowData) => {
+    detailModalTitle.textContent = `Detail Validasi untuk KBLI: ${rowData.kode_kbli}`;
+    const imageUrls = rowData.details ? rowData.details
+        .filter(d => d.bukti_foto_url && typeof d.bukti_foto_url === 'string' && d.bukti_foto_url.startsWith('http'))
+        .map(d => d.bukti_foto_url) : [];
     
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzEHilkCX7_40ZH1N53339YQs5hddCXdwwRZvqoDaEvtmaegIcE4QGzaBW-rCYPc8G0/exec';
-        const form = document.getElementById('data-form');
-        const submitButton = document.getElementById('submit-button');
-        const buttonText = document.getElementById('button-text');
-        const buttonIcon = document.getElementById('button-icon');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const statusMessage = document.getElementById('status-message');
+    currentImages = imageUrls;
 
-        function setupFileUploads() {
-            const fileInputs = [
-                { inputId: 'risiko_mikro_file', filenameId: 'filename-mikro', target: 'mikro' },
-                { inputId: 'risiko_kecil_file', filenameId: 'filename-kecil', target: 'kecil' },
-                { inputId: 'risiko_menengah_file', filenameId: 'filename-menengah', target: 'menengah' },
-                { inputId: 'risiko_besar_file', filenameId: 'filename-besar', target: 'besar' },
-            ];
-
-            fileInputs.forEach(item => {
-                const fileInput = document.getElementById(item.inputId);
-                const filenameDisplay = document.getElementById(item.filenameId);
-                if (fileInput && filenameDisplay) {
-                    fileInput.addEventListener('change', function() {
-                        if (this.files && this.files.length > 0) {
-                            filenameDisplay.textContent = this.files[0].name;
-                            filenameDisplay.classList.remove('text-slate-600');
-                            filenameDisplay.classList.add('text-green-700', 'font-semibold');
-                        } else {
-                            filenameDisplay.textContent = 'Tidak ada file.';
-                            filenameDisplay.classList.add('text-slate-600');
-                             filenameDisplay.classList.remove('text-green-700', 'font-semibold');
-                        }
-                    });
-                }
-            });
-        }
-        
-        function resetAllFileUploads() {
-             const filenameDisplays = document.querySelectorAll('[id^="filename-"]');
-             filenameDisplays.forEach(display => {
-                display.textContent = 'Tidak ada file.';
-                display.classList.add('text-slate-600');
-                display.classList.remove('text-green-700', 'font-semibold');
-             });
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            setupFileUploads();
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
-            const textareas = document.querySelectorAll('.autoresize-textarea');
-            textareas.forEach(textarea => {
-                textarea.addEventListener('input', function () {
-                    this.style.height = 'auto';
-                    this.style.height = (this.scrollHeight) + 'px';
-                });
-            });
-
-            // --- Logika untuk menonaktifkan input berdasarkan toggle ---
-            const risikoCards = document.querySelectorAll('[id^="risiko-"][id$="-card"]');
-            risikoCards.forEach(card => {
-                const toggle = card.querySelector('input[type="checkbox"]');
-                const inputsContainer = card.querySelector('.risiko-inputs');
-
-                const setInputsState = (disabled) => {
-                    if (disabled) {
-                        inputsContainer.classList.add('disabled-section');
-                    } else {
-                        inputsContainer.classList.remove('disabled-section');
-                    }
-                    inputsContainer.querySelectorAll('input[type="radio"], textarea, input[type="file"], label[for]').forEach(el => {
-                        el.disabled = disabled;
-                         if (el.tagName === 'LABEL') {
-                            el.style.cursor = disabled ? 'not-allowed' : 'pointer';
-                        }
-                    });
-
-                    // --- PERBAIKAN BARU: Reset nilai saat dinonaktifkan ---
-                    if (disabled) {
-                        // Uncheck radio buttons
-                        inputsContainer.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
-                        
-                        // Clear textarea
-                        const textarea = inputsContainer.querySelector('textarea');
-                        if(textarea) textarea.value = '';
-
-                        // Clear file input
-                        const fileInput = inputsContainer.querySelector('input[type="file"]');
-                        const filenameDisplay = card.querySelector('[id^="filename-"]');
-                        if (fileInput) fileInput.value = '';
-                        if (filenameDisplay) {
-                           filenameDisplay.textContent = 'Tidak ada file.';
-                           filenameDisplay.classList.add('text-slate-600');
-                           filenameDisplay.classList.remove('text-green-700', 'font-semibold');
-                        }
-                    }
-                };
-                
-                // Set initial state on load
-                setInputsState(!toggle.checked);
-
-                // Add change event listener
-                toggle.addEventListener('change', () => {
-                    setInputsState(!toggle.checked);
-                });
-            });
+    if (currentImages.length > 0) {
+        detailImageGallery.classList.remove('hidden');
+        detailNoImage.classList.add('hidden');
+        showImageInDetailModal(0);
+    } else {
+        detailImageGallery.classList.remove('hidden');
+        detailModalImage.classList.add('hidden');
+        detailNoImage.classList.remove('hidden');
+        detailImagePrev.classList.add('hidden');
+        detailImageNext.classList.add('hidden');
+        detailImageCounter.classList.add('hidden');
+    }
+    detailModalContent.innerHTML = '';
+    const groupedDetails = {};
+    if (rowData.details) {
+        rowData.details.forEach(detail => {
+            const groupKey = detail.sub_kategori || 'Lainnya';
+            if (!groupedDetails[groupKey]) {
+                groupedDetails[groupKey] = [];
+            }
+            groupedDetails[groupKey].push(detail);
         });
-
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // --- VALIDASI BARU ---
-            statusMessage.textContent = '';
-            statusMessage.classList.remove('text-red-600', 'text-green-600');
-            
-            const sectionsToValidate = [
-                { check: 'risiko_mikro_check', status: 'risiko_mikro_status', name: 'Risiko Mikro' },
-                { check: 'risiko_kecil_check', status: 'risiko_kecil_status', name: 'Risiko Kecil' },
-                { check: 'risiko_menengah_check', status: 'risiko_menengah_status', name: 'Risiko Menengah' },
-                { check: 'risiko_besar_check', status: 'risiko_besar_status', name: 'Risiko Besar' }
-            ];
-
-            const otherSections = [
-                { status: 'kewenangan_status', name: 'Kewenangan' },
-                { status: 'persyaratan_status', name: 'Persyaratan' },
-                { status: 'kewajiban_status', name: 'Kewajiban' }
-            ];
-            
-            let firstErrorElement = null;
-            let errorMessageText = '';
-
-            // Validasi Tingkat Resiko (jika toggle aktif)
-            for (const section of sectionsToValidate) {
-                const toggle = document.querySelector(`input[name="${section.check}"]`);
-                if (toggle && toggle.checked) {
-                    const statusSelected = document.querySelector(`input[name="${section.status}"]:checked`);
-                    if (!statusSelected) {
-                        errorMessageText = `Status untuk ${section.name} wajib dipilih.`;
-                        firstErrorElement = document.querySelector(`input[name="${section.status}"]`).closest('.segmented-control-new');
-                        break;
-                    }
-                }
+    }
+    Object.keys(groupedDetails).forEach(groupName => {
+        const groupItems = groupedDetails[groupName];
+        if (groupName === '-') return;
+        const groupWrapper = document.createElement('div');
+        groupWrapper.className = 'p-4 border rounded-lg bg-gray-50';
+        const groupTitle = document.createElement('h3');
+        groupTitle.className = 'text-lg font-bold text-gray-800 mb-4 capitalize';
+        groupTitle.textContent = groupName;
+        groupWrapper.appendChild(groupTitle);
+        const detailsGrid = document.createElement('div');
+        detailsGrid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4';
+        groupItems.forEach(item => {
+            if (!item.kategori) return;
+            const detailItem = document.createElement('div');
+            let statusClass = '';
+            if (item.status && item.status.toLowerCase().includes('sesuai')) {
+                statusClass = 'text-green-600';
+            } else if (item.status && item.status.toLowerCase().includes('tdk')) {
+                statusClass = 'text-red-600';
             }
-
-            // Validasi Kewenangan, dll. (jika belum ada error)
-            if (!firstErrorElement) {
-                for (const section of otherSections) {
-                    const statusSelected = document.querySelector(`input[name="${section.status}"]:checked`);
-                    if (!statusSelected) {
-                        errorMessageText = `Status untuk ${section.name} wajib dipilih.`;
-                        firstErrorElement = document.querySelector(`input[name="${section.status}"]`).closest('.segmented-control-new');
-                        break;
-                    }
-                }
+            let content = `<p class="font-semibold text-sm text-gray-700">${item.kategori}</p>`;
+            if(item.status) {
+                content += `<p class="text-sm"><span class="font-medium">Status:</span> <span class="font-bold ${statusClass}">${item.status}</span></p>`;
             }
-
-            if (firstErrorElement) {
-                statusMessage.textContent = errorMessageText;
-                statusMessage.classList.add('text-red-600');
-                
-                firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                firstErrorElement.style.outline = '2px solid #ef4444'; // red-500
-                firstErrorElement.style.borderRadius = '0.75rem';
-                setTimeout(() => {
-                    firstErrorElement.style.outline = '';
-                }, 3000);
-
-                return; 
+            if(item.jumlah) {
+                content += `<p class="text-sm"><span class="font-medium">Jumlah:</span> ${item.jumlah}</p>`;
             }
-            // --- AKHIR VALIDASI ---
-
-            buttonText.textContent = 'Mengirim...';
-            buttonIcon.classList.add('hidden');
-            loadingSpinner.classList.remove('hidden');
-            submitButton.disabled = true;
-            statusMessage.textContent = 'Mempersiapkan data dan file...';
-
-            const formData = new FormData();
-            
-            // Append all simple form fields
-            const formElements = form.elements;
-            for(let i=0; i<formElements.length; i++){
-                const element = formElements[i];
-                if(element.name && element.type !== 'file'){
-                    if(element.type === 'checkbox'){
-                         // Hanya kirim nilai 'true' jika dicentang
-                        if (element.checked) {
-                            formData.append(element.name, element.checked);
-                        }
-                    } else if (element.type === 'radio'){
-                         if(element.checked){
-                           formData.append(element.name, element.value);
-                         }
-                    } else {
-                        formData.append(element.name, element.value);
-                    }
-                }
+            if(item.catatan) {
+                content += `<p class="text-sm"><span class="font-medium">Catatan:</span> <span class="italic">${item.catatan}</span></p>`;
             }
-
-            const filePromises = [];
-            const fileInputs = document.querySelectorAll('input[type="file"]');
-
-            fileInputs.forEach(input => {
-                if (input.files.length > 0) {
-                    const file = input.files[0];
-                    const target = input.dataset.target;
-                    
-                    const promise = new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = event => {
-                            formData.append(`risiko_${target}_file_base64`, event.target.result);
-                            formData.append(`risiko_${target}_file_filename`, file.name);
-                            formData.append(`risiko_${target}_file_mimetype`, file.type);
-                            resolve();
-                        };
-                        reader.onerror = error => {
-                            reject(new Error(`Gagal membaca file ${file.name}: ${error}`));
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                    filePromises.push(promise);
-                }
-            });
-            
-            try {
-                await Promise.all(filePromises);
-                
-                statusMessage.textContent = 'Mengirim data ke server...';
-
-                const response = await fetch(scriptURL, { method: 'POST', body: formData });
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    statusMessage.textContent = 'Data validasi berhasil terkirim. Terima kasih!';
-                    statusMessage.classList.add('text-green-600');
-                    form.reset();
-                    resetAllFileUploads();
-                } else {
-                    throw new Error(result.message || 'Terjadi kesalahan di server.');
-                }
-
-            } catch (error) {
-                console.error('Error!', error);
-                statusMessage.textContent = `Maaf, terjadi kesalahan: ${error.message}`;
-                statusMessage.classList.add('text-red-600');
-            } finally {
-                setTimeout(() => {
-                    buttonText.textContent = 'Kirim Data';
-                    buttonIcon.classList.remove('hidden');
-                    loadingSpinner.classList.add('hidden');
-                    submitButton.disabled = false;
-                    statusMessage.textContent = '';
-                }, 4000);
-            }
+            detailItem.innerHTML = content;
+            detailsGrid.appendChild(detailItem);
         });
-    </script>
+        groupWrapper.appendChild(detailsGrid);
+        detailModalContent.appendChild(groupWrapper);
+    });
+    detailModal.classList.remove('hidden');
+};
+function showImageInDetailModal(index) {
+    if (!currentImages || currentImages.length === 0) return;
+    currentImageIndex = index;
+    
+    // Reset the UI state before trying to load a new image
+    detailModalImage.classList.remove('hidden'); // Show the image element
+    detailNoImage.classList.add('hidden'); // Hide the placeholder/error message
+    detailNoImage.querySelector('p').textContent = 'Tidak ada foto'; // Reset placeholder text
+
+    const imageUrl = currentImages[index];
+    detailModalImage.src = imageUrl;
+
+    // Handle image loading errors
+    detailModalImage.onerror = () => {
+        console.error('Gagal memuat gambar dari URL:', imageUrl);
+        detailModalImage.classList.add('hidden'); // Hide the broken image icon
+        detailNoImage.classList.remove('hidden'); // Show the placeholder area
+        detailNoImage.querySelector('p').textContent = 'Gagal memuat gambar.'; // Set error message
+    };
+
+    // This runs if the image loads successfully
+    detailModalImage.onload = () => {
+        detailNoImage.querySelector('p').textContent = 'Tidak ada foto'; // Ensure text is reset on success
+    };
+
+    detailImageCounter.textContent = `${index + 1} / ${currentImages.length}`;
+    detailImageCounter.classList.remove('hidden');
+    detailImagePrev.disabled = index === 0;
+    detailImageNext.disabled = index === currentImages.length - 1;
+    detailImagePrev.classList.remove('hidden');
+    detailImageNext.classList.remove('hidden');
+}
+detailImagePrev.addEventListener('click', () => {
+if (currentImageIndex > 0) {
+showImageInDetailModal(currentImageIndex - 1);
+}
+});
+detailImageNext.addEventListener('click', () => {
+if (currentImageIndex < currentImages.length - 1) {
+showImageInDetailModal(currentImageIndex + 1);
+}
+});
+const showStep = (stepNumber) => {
+document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+document.querySelector(`#step-${stepNumber}`).classList.add('active');
+updateProgressBar(stepNumber);
+updateNavButtons(stepNumber);
+validateCurrentStep();
+};
+const updateProgressBar = (stepNumber) => {
+document.querySelectorAll('.step-item').forEach(item => {
+const step = parseInt(item.dataset.step);
+item.classList.remove('active', 'completed');
+if (step < stepNumber) {
+item.classList.add('completed');
+item.querySelector('.step-indicator').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>`;
+} else if (step === stepNumber) {
+item.classList.add('active');
+item.querySelector('.step-indicator').innerHTML = step;
+} else {
+item.querySelector('.step-indicator').innerHTML = step;
+}
+});
+};
+const updateNavButtons = (stepNumber) => {
+prevBtn.style.display = stepNumber === 1 ? 'none' : 'inline-flex';
+nextBtn.style.display = stepNumber === totalSteps ? 'none' : 'inline-flex';
+submitButton.style.display = stepNumber === totalSteps ? 'inline-flex' : 'none';
+};
+const validateCurrentStep = () => {
+const currentStepElement = document.getElementById(`step-${currentStep}`);
+const statusSpan = statusMessageContainer.querySelector('span');
+let allValid = true;
+let validationMessage = "Anda dapat melanjutkan.";
+statusMessageContainer.classList.remove('bg-red-50', 'text-red-700', 'border-red-200');
+statusMessageContainer.classList.add('bg-indigo-50', 'text-indigo-700', 'border-indigo-200');
+const requiredInputs = currentStepElement.querySelectorAll('input[required]:not(:disabled), textarea[required]:not(:disabled)');
+requiredInputs.forEach(input => {
+if (!input.value.trim()) {
+allValid = false;
+validationMessage = "Pastikan semua field yang bertanda * sudah terisi dengan benar.";
+}
+});
+if (allValid) {
+if (currentStep === 2) {
+const toggles = currentStepElement.querySelectorAll('.toggle-switch input:checked');
+if (toggles.length === 0) {
+allValid = false;
+validationMessage = "Harap aktifkan dan isi setidaknya satu tingkat risiko.";
+} else {
+let statusSelectedOnAllActive = true;
+toggles.forEach(toggle => {
+const card = toggle.closest('.border');
+if (!card.querySelector('input[type="radio"]:checked')) {
+statusSelectedOnAllActive = false;
+}
+});
+if (!statusSelectedOnAllActive) {
+allValid = false;
+validationMessage = "Harap pilih status 'Sesuai' atau 'Tidak Sesuai' untuk Tingkat Risiko yang aktif.";
+}
+}
+} else if (currentStep === 3) {
+const activeToggles = currentStepElement.querySelectorAll('.toggle-switch input:checked');
+if (activeToggles.length === 0) {
+allValid = false;
+validationMessage = "Harap aktifkan dan isi setidaknya satu tingkat resiko.";
+} else {
+let validationFailed = false;
+for (const toggle of activeToggles) {
+const card = toggle.closest('.accordion-item');
+const level = card.querySelector('h3 span').textContent.toLowerCase();
+const categories = ['persyaratan', 'kewajiban', 'kewenangan'];
+for (const cat of categories) {
+const statusValue = form.elements[`${cat}_${level}_status`].value;
+if (!statusValue) {
+allValid = false;
+const catTitle = cat.charAt(0).toUpperCase() + cat.slice(1);
+const levelTitle = level.charAt(0).toUpperCase() + level.slice(1);
+validationMessage = `Lengkapi semua status untuk Tingkat Resiko "${levelTitle}" yang aktif. Status untuk "${catTitle}" belum dipilih.`;
+validationFailed = true;
+break;
+}
+}
+if (validationFailed) break;
+}
+if (allValid) {
+validationMessage = "Semua data valid. Silakan kirim data Anda.";
+}
+}
+}
+}
+nextBtn.disabled = !allValid;
+submitButton.disabled = !allValid;
+statusSpan.textContent = validationMessage;
+return allValid;
+};
+form.addEventListener('input', validateCurrentStep);
+nextBtn.addEventListener('click', () => {
+if (validateCurrentStep()) {
+if (currentStep < totalSteps) { currentStep++; showStep(currentStep); }
+} else {
+statusMessageContainer.classList.add('bg-red-50', 'text-red-700', 'border-red-200', 'animate-shake');
+setTimeout(() => statusMessageContainer.classList.remove('animate-shake'), 820);
+}
+});
+prevBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; showStep(currentStep); } });
+document.querySelectorAll('.accordion-header').forEach(header => {
+header.addEventListener('click', () => {
+const accordionContent = header.nextElementSibling;
+header.classList.toggle('active');
+if (header.classList.contains('active')) {
+accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+} else {
+accordionContent.style.maxHeight = '0px';
+}
+setTimeout(() => {
+if (header.classList.contains('active')) {
+accordionContent.querySelectorAll('textarea').forEach(textarea => autoResize(textarea));
+}
+}, 500);
+});
+});
+const defaultDropzoneContent = {};
+document.querySelectorAll('[id^="dropzone-text-"]').forEach(el => { defaultDropzoneContent[el.id.replace('dropzone-text-', '')] = el.innerHTML; });
+document.querySelectorAll('#step-2 .toggle-switch input[type="checkbox"]').forEach(toggle => {
+const card = toggle.closest('.border');
+if (!card) return;
+const inputsContainer = card.querySelector('.risiko-inputs');
+const manageInputs = (enable) => {
+if (!inputsContainer) return;
+const allInputs = inputsContainer.querySelectorAll('input, textarea');
+inputsContainer.classList.toggle('disabled-section', !enable);
+allInputs.forEach(input => input.disabled = !enable);
+if (!enable) {
+allInputs.forEach(input => {
+if (input.type === 'radio' || input.type === 'checkbox') {
+input.checked = false;
+} else {
+input.value = '';
+}
+});
+const fileInput = inputsContainer.querySelector('input[type="file"]');
+if (fileInput) {
+const dropzoneLabel = document.querySelector(`label[for="${fileInput.id}"]`);
+const dropzoneText = dropzoneLabel?.querySelector('div[id^="dropzone-text-"]');
+const target = fileInput.id.replace('risiko_', '').replace('_file', '');
+if(dropzoneText && defaultDropzoneContent[target]) {
+dropzoneText.innerHTML = defaultDropzoneContent[target];
+dropzoneLabel.classList.remove('border-green-400', 'bg-green-50/50');
+}
+}
+card.querySelectorAll('.status-button').forEach(btn => btn.classList.remove('active-sesuai', 'active-tdk-sesuai'));
+const badge = card.querySelector('.status-badge');
+if (badge) {
+badge.style.display = 'none';
+badge.textContent = '';
+badge.className = 'status-badge';
+}
+} else {
+inputsContainer.querySelectorAll('textarea').forEach(textarea => autoResize(textarea));
+}
+};
+toggle.addEventListener('change', () => {
+manageInputs(toggle.checked);
+validateCurrentStep();
+});
+manageInputs(false);
+});
+document.querySelectorAll('#step-3 .toggle-switch input[type="checkbox"]').forEach(toggle => {
+const accordionItem = toggle.closest('.accordion-item');
+if (!accordionItem) return;
+const inputsContainer = accordionItem.querySelector('.final-inputs-container');
+const manageInputs = (enable) => {
+if (!inputsContainer) return;
+const allInputs = inputsContainer.querySelectorAll('input, textarea');
+inputsContainer.classList.toggle('disabled-section', !enable);
+allInputs.forEach(input => input.disabled = !enable);
+if (!enable) {
+allInputs.forEach(input => {
+if (input.type === 'radio') {
+input.checked = false;
+} else {
+input.value = '';
+}
+});
+inputsContainer.querySelectorAll('.status-button').forEach(btn => btn.classList.remove('active-sesuai', 'active-tdk-sesuai'));
+} else {
+inputsContainer.querySelectorAll('textarea').forEach(textarea => autoResize(textarea));
+}
+};
+toggle.addEventListener('change', () => {
+manageInputs(toggle.checked);
+validateCurrentStep();
+});
+manageInputs(false);
+});
+const autoResize = (textarea) => {
+if (textarea.scrollHeight > textarea.clientHeight) {
+textarea.style.height = 'auto';
+textarea.style.height = textarea.scrollHeight + 'px';
+}
+};
+document.querySelectorAll('.autoresize-textarea, .autoresize-manual').forEach(textarea => {
+textarea.addEventListener('input', () => autoResize(textarea));
+autoResize(textarea);
+});
+document.querySelectorAll('input[type="file"]').forEach(fileInput => {
+fileInput.addEventListener('change', function() {
+const dropzoneLabel = document.querySelector(`label[for="${this.id}"]`);
+if (!dropzoneLabel) return;
+const dropzoneText = dropzoneLabel.querySelector('div[id^="dropzone-text-"]');
+if (!dropzoneText) return;
+const target = this.id.replace('risiko_', '').replace('_file', '');
+if (this.files && this.files.length > 0) {
+dropzoneText.innerHTML = `<p class="font-semibold text-xs text-green-700 break-all p-2">${this.files[0].name}</p>`;
+dropzoneLabel.classList.add('border-green-400', 'bg-green-50/50');
+} else {
+if (defaultDropzoneContent[target]) {
+dropzoneText.innerHTML = defaultDropzoneContent[target];
+}
+dropzoneLabel.classList.remove('border-green-400', 'bg-green-50/50');
+}
+});
+});
+document.querySelectorAll('.status-button').forEach(button => {
+button.addEventListener('click', () => {
+const groupName = button.dataset.group;
+const value = button.dataset.value;
+document.querySelector(`input[name="${groupName}"][value="${value}"]`).checked = true;
+document.querySelectorAll(`button[data-group="${groupName}"]`).forEach(btn => btn.classList.remove('active-sesuai', 'active-tdk-sesuai'));
+const card = button.closest('.border, .accordion-item, .grid');
+const badge = card?.querySelector('.status-badge');
+if (value === "Sesuai"){
+button.classList.add('active-sesuai');
+if (badge) { badge.textContent = 'Sesuai'; badge.className = 'status-badge sesuai'; badge.style.display = 'inline-block'; }
+} else {
+button.classList.add('active-tdk-sesuai');
+if (badge) { badge.textContent = 'Tdk Sesuai'; badge.className = 'status-badge tdk-sesuai'; badge.style.display = 'inline-block'; }
+}
+validateCurrentStep();
+});
+});
+function resetFormUI() {
+form.reset();
+currentStep = 1;
+showStep(1);
+document.querySelectorAll('.status-button').forEach(b => b.classList.remove('active-sesuai', 'active-tdk-sesuai'));
+document.querySelectorAll('.toggle-switch input[type="checkbox"]').forEach(t => {
+t.checked = false;
+t.dispatchEvent(new Event('change'));
+});
+document.querySelectorAll('input[type="file"]').forEach(fi => fi.dispatchEvent(new Event('change')));
+document.querySelectorAll('.autoresize-textarea, .autoresize-manual').forEach(textarea => {
+textarea.style.height = 'auto';
+autoResize(textarea);
+});
+document.querySelectorAll('.accordion-header.active').forEach(header => header.click());
+statusMessageContainer.querySelector('span').textContent = "Pastikan semua field yang bertanda * sudah terisi dengan benar.";
+statusMessageContainer.className = 'text-center text-sm font-medium mt-6 p-4 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center justify-between gap-x-3';
+resetBtn.classList.add('hidden');
+}
+resetBtn.addEventListener('click', resetFormUI);
+form.addEventListener('submit', async (e) => {
+e.preventDefault();
+if(!validateCurrentStep()){
+statusMessageContainer.classList.add('bg-red-50', 'text-red-700', 'border-red-200', 'animate-shake');
+setTimeout(() => statusMessageContainer.classList.remove('animate-shake'), 820);
+return;
+}
+const loadingSpinner = document.getElementById('loading-spinner');
+const buttonText = document.getElementById('button-text');
+submitButton.disabled = true;
+buttonText.textContent = 'Mengirim...';
+buttonText.classList.add('pl-6');
+loadingSpinner.classList.remove('hidden');
+statusMessageContainer.querySelector('span').textContent = 'Sedang memproses data Anda...';
+resetBtn.classList.add('hidden');
+const formData = new FormData(form);
+const filePromises = Array.from(form.querySelectorAll('input[type="file"]')).filter(i => i.files.length > 0 && !i.disabled).map(i => new Promise((resolve, reject) => {
+const reader = new FileReader();
+reader.onloadend = () => resolve({ name: i.name, fileName: i.files[0].name, mimeType: i.files[0].type, content: reader.result.split(',')[1] });
+reader.onerror = reject;
+reader.readAsDataURL(i.files[0]);
+}));
+try {
+const fileDataArray = await Promise.all(filePromises);
+fileDataArray.forEach(f => {
+formData.append(`${f.name}_base64`, `data:${f.mimeType};base64,${f.content}`);
+formData.append(`${f.name}_filename`, f.fileName);
+});
+const response = await fetch(SCRIPT_URL_POST, { method: 'POST', body: formData });
+if (!response.ok) throw new Error(`Network response not OK.`);
+statusMessageContainer.className = 'text-center text-sm font-medium mt-6 p-4 rounded-lg bg-green-50 text-green-700 border border-green-200 flex items-center justify-between gap-x-3';
+statusMessageContainer.querySelector('span').textContent = 'Data berhasil dikirim! Klik Dashboard untuk melihat ringkasan.';
+resetBtn.classList.remove('hidden');
+} catch (error) {
+console.error('Error!', error);
+statusMessageContainer.className = 'text-center text-sm font-medium mt-6 p-4 rounded-lg bg-red-50 text-red-700 border-red-200 flex items-center justify-between gap-x-3';
+statusMessageContainer.querySelector('span').textContent = 'Gagal mengirim data. Silakan coba lagi.';
+} finally {
+submitButton.disabled = false;
+buttonText.textContent = 'Kirim Data';
+buttonText.classList.remove('pl-6');
+loadingSpinner.classList.add('hidden');
+}
+});
+switchView('dashboard-view');
+});
+</script>
 </body>
 </html>
-
 
